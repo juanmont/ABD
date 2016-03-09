@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 import p1admin.model.Opcion;
 import p1admin.model.Pregunta;
 
-public class OpcionMapper extends AbstractMapper<Opcion, String>{
+public class OpcionMapper extends AbstractMapper<Opcion, Integer>{
 
 	public OpcionMapper(DataSource ds) {
 		super(ds);
@@ -54,13 +54,19 @@ public class OpcionMapper extends AbstractMapper<Opcion, String>{
 	}
 
 	@Override
-	protected String getKey(Opcion object) {
+	protected Integer getKey(Opcion object) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected Object[] serializeKey(String key) {
+	protected Object[] serializeKey(Integer key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected List<Opcion> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -13,7 +14,7 @@ import javax.sql.DataSource;
 import p1admin.model.Opcion;
 import p1admin.model.Pregunta;
 
-public class PreguntaMapper extends AbstractMapper<Pregunta, String>{
+public class PreguntaMapper extends AbstractMapper<Pregunta, Integer>{
 	
 	public PreguntaMapper(DataSource ds) {
 		super(ds);
@@ -61,17 +62,17 @@ public class PreguntaMapper extends AbstractMapper<Pregunta, String>{
 	}
 
 	@Override
-	protected Object[] serializeKey(String key) {
+	protected Object[] serializeKey(Integer key) {
 		return new Object[] {key};
 	}
 
 	@Override
-	protected String getKey(Pregunta object) {
-		return String.valueOf(object.getId());
+	protected Integer getKey(Pregunta object) {
+		return object.getId();
 	}
 	
-	public List<Pregunta> getAllQuestions(){
-		List<Pregunta> lista = new ArrayList<Pregunta>();
+	protected List<Pregunta> getAll(){
+		List<Pregunta> lista = new LinkedList<Pregunta>();
 		String sql = "SELECT * FROM Preguntas";
 		Pregunta p;
 		try(Connection con = this.ds.getConnection();

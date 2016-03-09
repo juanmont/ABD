@@ -21,8 +21,8 @@ import p1admin.model.Pregunta;
  */
 public class DBFacade implements GenericDBFacade<Pregunta, Opcion> {
 	// TODO Introduce los atributos que sean necesarios.
-	private AbstractMapper<Pregunta, String> mapperPreguntas;
-	private AbstractMapper<Opcion, String> mapperOpciones;
+	private AbstractMapper<Pregunta, Integer> mapperPreguntas;
+	private AbstractMapper<Opcion, Integer> mapperOpciones;
 
 	// TODO Si es necesario, añade el constructor que inicialice esos atributos.
 	public DBFacade(DataSource ds){
@@ -64,7 +64,7 @@ public class DBFacade implements GenericDBFacade<Pregunta, Opcion> {
 	public List<Pregunta> getAllQuestions() {
 		System.out.println("Obtener todas las preguntas de la BD");
 		// TODO Implementar
-		return new LinkedList<>();
+		return mapperPreguntas.getAll();
 	}
 
 	/**
@@ -86,7 +86,13 @@ public class DBFacade implements GenericDBFacade<Pregunta, Opcion> {
 	public List<Pregunta> findQuestionsContaining(String text) {
 		System.out.println("Búsqueda de preguntas que contienen: " + text);
 		// TODO implementar
-		return new LinkedList<>();
+		List<Pregunta> lista = new LinkedList<Pregunta>();
+		lista = mapperPreguntas.getAll();
+		for(Pregunta p: lista){
+			if(!p.getEnunciado().contains(text))
+				lista.remove(p);
+		}
+		return lista;
 	}
 
 	/**
@@ -107,7 +113,7 @@ public class DBFacade implements GenericDBFacade<Pregunta, Opcion> {
 	@Override
 	public void updateQuestion(Pregunta question) {
 		System.out.println("Actualizar pregunta: " + question);
-		// TODO Implementar
+		mapperPreguntas.update(question);
 	}
 
 	/**
@@ -128,8 +134,8 @@ public class DBFacade implements GenericDBFacade<Pregunta, Opcion> {
 	@Override
 	public void updateAnswer(Pregunta question, Opcion answer) {
 		System.out.println("Actualizar opción " + answer);
-		// TODO Implementar
-
+		mapperOpciones.update(answer); //CREO QUE TENEMOS QUE METER TAMBIEN LA PREGUNTA PARA UPDATEAR LA RESPUESTA
+		mapperPreguntas.update(question);
 	}
 
 	/**
@@ -147,7 +153,7 @@ public class DBFacade implements GenericDBFacade<Pregunta, Opcion> {
 	@Override
 	public void deleteAnswer(Pregunta question, Opcion answer) {
 		System.out.println("Eliminar opción " + answer);
-		// TODO Implementar
+		mapperOpciones.delete(answer);
 	}
 
 	/**
@@ -166,7 +172,10 @@ public class DBFacade implements GenericDBFacade<Pregunta, Opcion> {
 	@Override
 	public void deleteQuestion(Pregunta question) {
 		System.out.println("Eliminar pregunta " + question);
-		// TODO Implementar
+		List<Opcion> lista = question.getOpciones();
+		for(Opcion o: lista)
+			mapperOpciones.delete(o);
+		mapperPreguntas.delete(question);
 	}
 
 	/**
@@ -183,6 +192,6 @@ public class DBFacade implements GenericDBFacade<Pregunta, Opcion> {
 	@Override
 	public void insertAnswer(Pregunta question, Opcion answer) {
 		System.out.println("Insertar " + answer);
-		// TODO Implementar
+		mapperOpciones.insert(answer);
 	}
 }
