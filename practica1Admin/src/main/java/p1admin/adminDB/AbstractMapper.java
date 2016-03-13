@@ -10,8 +10,8 @@ import javax.sql.DataSource;
 
 public abstract class AbstractMapper<T,K> {
 
-	DataSource ds;
-	DataAccessor da;
+	protected DataSource ds;
+	protected DataAccessor da;
 	
 	protected abstract T buildObject(ResultSet rs) throws SQLException;
 
@@ -31,6 +31,9 @@ public abstract class AbstractMapper<T,K> {
 	
 	protected abstract List<T> getAll();
 	
+	protected abstract void setKeyTransfer(T transfer);
+	
+	
 	public AbstractMapper(DataSource ds) {
 		this.ds = ds;
 		this.da = new DataAccessor(this.ds);
@@ -41,7 +44,7 @@ public abstract class AbstractMapper<T,K> {
 		String[] fields = getColumnNames();
 		Object[] values = serializeObject(transfer);
 		boolean sql = this.da.insertRow(tableName, fields, values);
-		
+		setKeyTransfer(transfer);
 		return sql;
 		
 	}
@@ -50,8 +53,8 @@ public abstract class AbstractMapper<T,K> {
 		String tableName = getTableName();
 		String[] fields = getColumnNames();
 		String[] key = getKeyColumnName();
-		Object[] values = serializeObject(transfer);
-		Object[] newValues = serializeKey(getKey(transfer)); 
+		Object[] newValues = serializeObject(transfer);
+		Object[] values = serializeKey(getKey(transfer)); 
 		
 		boolean sql = this.da.updateRows(tableName, key, values, fields, newValues);
 		

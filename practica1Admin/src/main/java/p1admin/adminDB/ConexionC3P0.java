@@ -10,7 +10,7 @@ public class ConexionC3P0 {
 	
 	public ConexionC3P0() {
 		ComboPooledDataSource cpds = new ComboPooledDataSource();
-		cpds.setJdbcUrl("jdbc:mysql://localhost/Practica_505");
+		cpds.setJdbcUrl("jdbc:mysql://localhost/practica_505");
 		
 		ds = cpds;
 	}

@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,12 +42,12 @@ public class PreguntaMapper extends AbstractMapper<Pregunta, Integer>{
 
 	@Override
 	protected String getTableName() {
-		return "Preguntas";
+		return "preguntas";
 	}
 
 	@Override
 	protected String[] getColumnNames() {
-		return new String[] {"id", "enunciado", "opciones"};
+		return new String[] {"id", "enunciado"};
 	}
 
 	@Override
@@ -58,7 +57,7 @@ public class PreguntaMapper extends AbstractMapper<Pregunta, Integer>{
 
 	@Override
 	protected Object[] serializeObject(Pregunta object) {
-		return new Object[] {object.getId(), object.getEnunciado(), object.getOpciones()};
+		return new Object[] {object.getId(), object.getEnunciado()};
 	}
 
 	@Override
@@ -73,7 +72,7 @@ public class PreguntaMapper extends AbstractMapper<Pregunta, Integer>{
 	
 	protected List<Pregunta> getAll(){
 		List<Pregunta> lista = new LinkedList<Pregunta>();
-		String sql = "SELECT * FROM Preguntas";
+		String sql = "SELECT * FROM preguntas";
 		Pregunta p;
 		try(Connection con = this.ds.getConnection();
 				PreparedStatement pst = con.prepareStatement(sql)) {
@@ -92,4 +91,7 @@ public class PreguntaMapper extends AbstractMapper<Pregunta, Integer>{
 		
 	}
 
+	@Override
+	protected void setKeyTransfer(Pregunta transfer) {
+	}
 }

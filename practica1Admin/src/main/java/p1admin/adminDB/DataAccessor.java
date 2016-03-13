@@ -1,7 +1,9 @@
 package p1admin.adminDB;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 
 import javax.sql.DataSource;
@@ -9,7 +11,8 @@ import java.sql.Connection;
 
 public class DataAccessor {
 	
-	DataSource ds;
+	private DataSource ds;
+	private ResultSet lastKey;
 
 	public DataAccessor(DataSource ds) {
 		this.ds = ds;
@@ -19,13 +22,13 @@ public class DataAccessor {
 		String sql = generateInsertStatement(tableName, fields);
 		
 		try(Connection con = this.ds.getConnection();
-				PreparedStatement pst = con.prepareStatement(sql)) {
+				PreparedStatement pst = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)) {
 		
 			for (int i = 0; i < values.length; i++) {
 				pst.setObject(i + 1, values[i]);
 			}
-			
 			int numRows = pst.executeUpdate();
+			lastKey = pst.getGeneratedKeys();
 			return (numRows == 1);
 		
 		} catch (SQLException e) {
@@ -82,7 +85,7 @@ public class DataAccessor {
 		String sql = generateUpdateStatement(tableName, keys, cols);
 		
 		try(Connection con = this.ds.getConnection();
-				PreparedStatement pst = con.prepareStatement(sql)) {
+				PreparedStatement pst = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)) {
 		
 			
 			for (int i = 0; i < newValues.length; i++) {
@@ -90,7 +93,7 @@ public class DataAccessor {
 			}
 			
 			for (int i = 0; i < values.length; i++) {
-				pst.setObject(i + newValues.length + 1, values[i]);
+				pst.setObject(i + values.length + 1, values[i]);
 			}
 			
 			int numRows = pst.executeUpdate();
@@ -113,8 +116,12 @@ public class DataAccessor {
 		for(int i = 0; i < keys.length-1 ; i++) {
 			sentencia += keys[i] + " = ? AND ";
 		}
-		sentencia += keys[keys.length] + " = ?";
+		sentencia += keys[keys.length-1] + " = ?";
 		
 		return sentencia;
+	}
+	
+	public ResultSet getLastKey(){
+		return this.lastKey;
 	}
 }

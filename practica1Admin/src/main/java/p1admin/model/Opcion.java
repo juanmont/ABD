@@ -2,6 +2,7 @@ package p1admin.model;
 
 public class Opcion {
 	private Pregunta preguntaMadre;
+	private Integer idOpcion;
 	private int numeroOrden;
 	private String texto;
 	
@@ -31,6 +32,14 @@ public class Opcion {
 
 	public void setTexto(String texto) {
 		this.texto = texto;
+	}
+	
+	public void setIdOpcion(Integer i){
+		this.idOpcion = i;
+	}
+	
+	public Integer getIdOpcion(){
+		return this.idOpcion;
 	}
 	
 	@Override

@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import com.mchange.v2.c3p0.DataSources;
-
 import p1admin.model.Opcion;
 import p1admin.model.Pregunta;
 
@@ -134,8 +132,7 @@ public class DBFacade implements GenericDBFacade<Pregunta, Opcion> {
 	@Override
 	public void updateAnswer(Pregunta question, Opcion answer) {
 		System.out.println("Actualizar opción " + answer);
-		mapperOpciones.update(answer); //CREO QUE TENEMOS QUE METER TAMBIEN LA PREGUNTA PARA UPDATEAR LA RESPUESTA
-		mapperPreguntas.update(question);
+		mapperOpciones.update(answer);
 	}
 
 	/**
