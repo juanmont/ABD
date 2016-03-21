@@ -18,7 +18,7 @@ public class DataAccessor {
 		this.ds = ds;
 	}
 
-	public boolean insertRow(String tableName, String[] fields, Object[] values) {
+	public Integer insertRow(String tableName, String[] fields, Object[] values) {
 		String sql = generateInsertStatement(tableName, fields);
 		
 		try(Connection con = this.ds.getConnection();
@@ -27,14 +27,18 @@ public class DataAccessor {
 			for (int i = 0; i < values.length; i++) {
 				pst.setObject(i + 1, values[i]);
 			}
+			@SuppressWarnings("unused")
 			int numRows = pst.executeUpdate();
 			lastKey = pst.getGeneratedKeys();
-			return (numRows == 1);
+			System.out.println(lastKey.toString());
+			if(lastKey.next())
+				return new Integer(lastKey.getInt(1));
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		}
+		return null;
 		
 	}
 
@@ -93,7 +97,7 @@ public class DataAccessor {
 			}
 			
 			for (int i = 0; i < values.length; i++) {
-				pst.setObject(i + values.length + 1, values[i]);
+				pst.setObject(i + newValues.length + 1, values[i]);
 			}
 			
 			int numRows = pst.executeUpdate();
@@ -111,6 +115,7 @@ public class DataAccessor {
 		for(int i = 0; i < cols.length-1 ; i++){
 			sentencia += cols[i] + " = ?,";
 		}
+		sentencia += cols[cols.length-1] + " = ?";
 		
 		sentencia += " WHERE ";
 		for(int i = 0; i < keys.length-1 ; i++) {
@@ -119,9 +124,5 @@ public class DataAccessor {
 		sentencia += keys[keys.length-1] + " = ?";
 		
 		return sentencia;
-	}
-	
-	public ResultSet getLastKey(){
-		return this.lastKey;
 	}
 }

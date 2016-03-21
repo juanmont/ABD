@@ -46,7 +46,7 @@ public class OpcionMapper extends AbstractMapper<Opcion, Integer>{
 
 	@Override
 	protected String[] getColumnNames() {
-		return new String[] {"id", "texto", "idPregunta", "num_pregunta"};
+		return new String[] {"texto", "idPregunta", "numOpcion"};
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class OpcionMapper extends AbstractMapper<Opcion, Integer>{
 
 	@Override
 	protected Object[] serializeObject(Opcion object) {
-		return new Object[] {object.getIdOpcion(), object.getTexto() , object.getPreguntaMadre().getId(), object.getNumeroOrden()};
+		return new Object[] {object.getTexto(), object.getPreguntaMadre().getId(), object.getNumeroOrden()};
 	}
 
 	@Override
@@ -66,21 +66,26 @@ public class OpcionMapper extends AbstractMapper<Opcion, Integer>{
 
 	@Override
 	protected Object[] serializeKey(Integer key) {
-		return new Object[] {key, };
+		return new Object[] {key};
 	}
 
 	@Override
-	protected List<Opcion> getAll() {
+	protected List<Opcion> getAll(Integer id) {
 		List<Opcion> lista = new LinkedList<Opcion>();
-		String sql = "SELECT * FROM Respuestas WHERE idP=";
+		String sql = "SELECT * FROM opciones WHERE idPregunta="+id.toString();
 		Opcion o;
+		Pregunta p;
 		try(Connection con = this.ds.getConnection();
 				PreparedStatement pst = con.prepareStatement(sql)) {
 		ResultSet rs = pst.executeQuery();
 				 while (rs.next()) {
 					 o = new Opcion();
-					 o.setNumeroOrden(rs.getInt("numeroOrden"));
+					 o.setIdOpcion(new Integer(rs.getInt("id")));
+					 o.setNumeroOrden(rs.getInt("numOpcion"));
 					 o.setTexto(rs.getString("texto"));
+					 p = new Pregunta();
+					 p.setId(id);
+					 o.setPreguntaMadre(p);
 					 lista.add(o);
 				 }
 		}catch (SQLException e) {
@@ -91,13 +96,8 @@ public class OpcionMapper extends AbstractMapper<Opcion, Integer>{
 	}
 
 	@Override
-	protected void setKeyTransfer(Opcion transfer) {
-		try {
-			transfer.setIdOpcion(new Integer(super.da.getLastKey().getInt("id")));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	protected void setKeyTransfer(Opcion transfer,Integer key) {
+		transfer.setIdOpcion(key);
 	}
 
 }

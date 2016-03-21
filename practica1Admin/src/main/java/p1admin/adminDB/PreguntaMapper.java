@@ -31,7 +31,7 @@ public class PreguntaMapper extends AbstractMapper<Pregunta, Integer>{
 			o.setPreguntaMadre(result);
 			result.addOpcion(o);
 		}
-		return null;
+		return result;
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class PreguntaMapper extends AbstractMapper<Pregunta, Integer>{
 		return object.getId();
 	}
 	
-	protected List<Pregunta> getAll(){
+	protected List<Pregunta> getAll(Integer id){
 		List<Pregunta> lista = new LinkedList<Pregunta>();
 		String sql = "SELECT * FROM preguntas";
 		Pregunta p;
@@ -92,6 +92,6 @@ public class PreguntaMapper extends AbstractMapper<Pregunta, Integer>{
 	}
 
 	@Override
-	protected void setKeyTransfer(Pregunta transfer) {
+	protected void setKeyTransfer(Pregunta transfer, Integer key) {
 	}
 }

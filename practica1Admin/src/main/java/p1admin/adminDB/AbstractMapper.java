@@ -29,9 +29,9 @@ public abstract class AbstractMapper<T,K> {
 	
 	protected abstract K getKey(T object);
 	
-	protected abstract List<T> getAll();
+	protected abstract List<T> getAll(K key);
 	
-	protected abstract void setKeyTransfer(T transfer);
+	protected abstract void setKeyTransfer(T transfer,Integer key);
 	
 	
 	public AbstractMapper(DataSource ds) {
@@ -43,9 +43,11 @@ public abstract class AbstractMapper<T,K> {
 		String tableName = getTableName();
 		String[] fields = getColumnNames();
 		Object[] values = serializeObject(transfer);
-		boolean sql = this.da.insertRow(tableName, fields, values);
-		setKeyTransfer(transfer);
-		return sql;
+		Integer key = this.da.insertRow(tableName, fields, values);
+		setKeyTransfer(transfer,key);
+		if(key != null)
+			return true;
+		return false;
 		
 	}
 	

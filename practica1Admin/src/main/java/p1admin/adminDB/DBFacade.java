@@ -62,7 +62,13 @@ public class DBFacade implements GenericDBFacade<Pregunta, Opcion> {
 	public List<Pregunta> getAllQuestions() {
 		System.out.println("Obtener todas las preguntas de la BD");
 		// TODO Implementar
-		return mapperPreguntas.getAll();
+		List<Pregunta> lista = mapperPreguntas.getAll(null);
+		for(Pregunta p: lista){
+			List<Opcion> listaOpciones = mapperOpciones.getAll(p.getId());
+			for(Opcion o: listaOpciones)
+				p.addOpcion(o);
+		}
+		return lista;
 	}
 
 	/**
@@ -85,7 +91,7 @@ public class DBFacade implements GenericDBFacade<Pregunta, Opcion> {
 		System.out.println("Búsqueda de preguntas que contienen: " + text);
 		// TODO implementar
 		List<Pregunta> lista = new LinkedList<Pregunta>();
-		lista = mapperPreguntas.getAll();
+		lista = mapperPreguntas.getAll(null);
 		for(Pregunta p: lista){
 			if(!p.getEnunciado().contains(text))
 				lista.remove(p);
