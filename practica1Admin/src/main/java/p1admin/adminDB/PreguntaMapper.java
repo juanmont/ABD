@@ -93,5 +93,6 @@ public class PreguntaMapper extends AbstractMapper<Pregunta, Integer>{
 
 	@Override
 	protected void setKeyTransfer(Pregunta transfer, Integer key) {
+		transfer.setId(key);
 	}
 }

@@ -30,7 +30,6 @@ public class DataAccessor {
 			@SuppressWarnings("unused")
 			int numRows = pst.executeUpdate();
 			lastKey = pst.getGeneratedKeys();
-			System.out.println(lastKey.toString());
 			if(lastKey.next())
 				return new Integer(lastKey.getInt(1));
 		
@@ -79,7 +78,7 @@ public class DataAccessor {
 		for(int i = 0; i < key.length-1 ; i++){
 			sentencia += key[i] + " = ? AND ";
 		}
-		sentencia += key[key.length] + " = ?";
+		sentencia += key[key.length-1] + " = ?";
 		
 		return sentencia;
 		

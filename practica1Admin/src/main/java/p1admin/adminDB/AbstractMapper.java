@@ -66,7 +66,7 @@ public abstract class AbstractMapper<T,K> {
 	public boolean delete(T transfer) {
 		String tableName = getTableName();
 		String[] key = getKeyColumnName();
-		Object[] values = serializeObject(transfer);
+		Object[] values = serializeKey(getKey(transfer)); 
 		boolean sql = this.da.deleteRows(tableName, key, values);
 		
 		return sql;

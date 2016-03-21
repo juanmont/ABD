@@ -63,8 +63,9 @@ public class DBFacade implements GenericDBFacade<Pregunta, Opcion> {
 		System.out.println("Obtener todas las preguntas de la BD");
 		// TODO Implementar
 		List<Pregunta> lista = mapperPreguntas.getAll(null);
+		List<Opcion> listaOpciones = null;
 		for(Pregunta p: lista){
-			List<Opcion> listaOpciones = mapperOpciones.getAll(p.getId());
+			listaOpciones = mapperOpciones.getAll(p.getId());
 			for(Opcion o: listaOpciones)
 				p.addOpcion(o);
 		}
@@ -91,10 +92,16 @@ public class DBFacade implements GenericDBFacade<Pregunta, Opcion> {
 		System.out.println("Búsqueda de preguntas que contienen: " + text);
 		// TODO implementar
 		List<Pregunta> lista = new LinkedList<Pregunta>();
+		List<Opcion> listaOpciones = null;
 		lista = mapperPreguntas.getAll(null);
 		for(Pregunta p: lista){
 			if(!p.getEnunciado().contains(text))
 				lista.remove(p);
+		}
+		for(Pregunta p: lista){
+			listaOpciones = mapperOpciones.getAll(p.getId());
+			for(Opcion o: listaOpciones)
+				p.addOpcion(o);
 		}
 		return lista;
 	}
@@ -138,6 +145,7 @@ public class DBFacade implements GenericDBFacade<Pregunta, Opcion> {
 	@Override
 	public void updateAnswer(Pregunta question, Opcion answer) {
 		System.out.println("Actualizar opción " + answer);
+		answer.setPreguntaMadre(question);
 		mapperOpciones.update(answer);
 	}
 
@@ -156,6 +164,7 @@ public class DBFacade implements GenericDBFacade<Pregunta, Opcion> {
 	@Override
 	public void deleteAnswer(Pregunta question, Opcion answer) {
 		System.out.println("Eliminar opción " + answer);
+		answer.setPreguntaMadre(question);
 		mapperOpciones.delete(answer);
 	}
 
