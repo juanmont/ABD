@@ -136,6 +136,18 @@ public class Usuario {
 	public int getEdad(){
 		return calcularEdad(fecha_nacimiento);
 	}
+	
+	public void addAficion(String a){
+		aficiones.add(a);
+	}
+	
+	public void deleteAficion(String a){
+		aficiones.remove(a);
+	}
+	
+	public void updateAficion(String aOld, String aNew){
+		aficiones.add(aficiones.indexOf(aOld), aNew);
+	}
 
 	/*public List<Aficiones> getAficiones() {
 		return aficiones;

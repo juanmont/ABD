@@ -5,11 +5,15 @@
  */
 package abd.p1.view;
 
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 
+import abd.p1.controller.UserController;
 import abd.p1.model.Usuario;
 
 /**
@@ -25,17 +29,43 @@ public class UserPanel extends javax.swing.JPanel {
 	private String nombre = "pepe";
     private int edad = 32;
     private boolean editable = true;
+    private Usuario uCambio;
+    private Usuario u;
+    private UserController control;
     
     /**
      * Creates new form UserPanel
      */
-    public UserPanel(Usuario u, List<String> aficiones) {
+    public UserPanel(Usuario u, List<String> aficiones, boolean miPerfil, UserController c) {
+    	this.u = u;
+    	this.control = c;
+    	uCambio = new Usuario();
         initComponents(u, aficiones);
+        if(!miPerfil){
+        	desactivarBotones();
+        }
         labelNombre.setText(u.getNombre());
         labelEdad.setText(u.getEdad() + " años");
     }
 
-    public String getNombre() {
+    private void desactivarBotones() {
+		buttonAnadirAficion.setVisible(false);
+		buttonEditarAficion.setVisible(false);
+    	buttonEliminarAficion.setVisible(false);
+		buttonCancelar.setText("Volver");
+		buttonAvatar.setVisible(false);
+		buttonFechaNacimiento.setVisible(false);
+		buttonGuardar.setVisible(false);
+		buttonNombre.setVisible(false);
+		buttonPassword.setVisible(false);
+		buttonPreferencia.setVisible(false);
+		buttonSexo.setVisible(false);
+		jTextArea1.setEnabled(false);
+		listaAficiones.setPreferredSize(new Dimension(300,500));
+		
+	}
+
+	public String getNombre() {
         return nombre;
     }
 
@@ -118,16 +148,31 @@ public class UserPanel extends javax.swing.JPanel {
         labelEdad.setText("Edad");
 
         buttonNombre.setText("Cambiar nombre");
+        buttonNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonNombreActionPerformed(evt);
+            }
+        });
 
         buttonFechaNacimiento.setText("Cambiar fecha de nacimiento");
+        buttonFechaNacimiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonFechaNacimientoActionPerformed(evt);
+            }
+        });
 
         buttonAvatar.setText("Cambiar avatar");
+        buttonAvatar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAvatarActionPerformed(evt);
+            }
+        });
 
         labelDescripcion.setText("Descripción:");
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
-        jTextArea1.setText("Soy malote a más no poder.\nBusco gente similar para hacer maldades.");
+        jTextArea1.setText(u.getDescripcion());
         scrollDescripcion.setViewportView(jTextArea1);
 
         labelAficiones.setText("Aficiones:");
@@ -140,8 +185,19 @@ public class UserPanel extends javax.swing.JPanel {
         scrollAficiones.setViewportView(listaAficiones);
 
         buttonAnadirAficion.setText("Añadir afición");
+        buttonAnadirAficion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAnadirAficionActionPerformed(evt);
+            }
+
+        });
 
         buttonEliminarAficion.setText("Eliminar seleccionada");
+        buttonEliminarAficion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonEliminarAficionActionPerformed(evt);
+            }
+        });
 
         buttonEditarAficion.setText("Editar seleccionada");
         buttonEditarAficion.addActionListener(new java.awt.event.ActionListener() {
@@ -151,18 +207,33 @@ public class UserPanel extends javax.swing.JPanel {
         });
 
         buttonSexo.setText("Cambiar sexo");
+        buttonSexo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSexoActionPerformed(evt);
+            }
+        });
 
         buttonPreferencia.setText("Cambiar preferencia");
+        buttonPreferencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPreferenciaActionPerformed(evt);
+            }
+        });
 
         labelSexo.setText("Sexo:");
 
-        labelSexoGenero.setText("Masculino");
+        labelSexoGenero.setText(u.getGenero().toString());
 
         labelBusca.setText("Busca:");
 
-        labelBuscaGenero.setText("Mujeres");
+        labelBuscaGenero.setText(u.getContacto().toString());
 
         buttonCancelar.setText("Cancelar");
+        buttonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCancelarActionPerformed(evt);
+            }
+        });
 
         buttonGuardar.setText("Guardar cambios");
         buttonGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -278,19 +349,61 @@ public class UserPanel extends javax.swing.JPanel {
                     .addComponent(buttonPassword))
                 .addContainerGap())
         );
+        if(u.getImagen() != null)
+        	avatarPanel1.setIcon(new ImageIcon(u.getImagen()));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonEditarAficionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditarAficionActionPerformed
+    protected void buttonNombreActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void buttonFechaNacimientoActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void buttonAvatarActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void buttonSexoActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void buttonPreferenciaActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void buttonCancelarActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void buttonEliminarAficionActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void buttonEditarAficionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditarAficionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonEditarAficionActionPerformed
 
     private void buttonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuardarActionPerformed
-        // TODO add your handling code here:
+        control.updateUser(u.getEmail(), uCambio);
     }//GEN-LAST:event_buttonGuardarActionPerformed
 
     private void buttonPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonPasswordActionPerformed
+    
+    private void buttonAnadirAficionActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

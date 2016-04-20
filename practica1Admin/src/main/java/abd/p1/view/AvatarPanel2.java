@@ -7,6 +7,7 @@ package abd.p1.view;
 
 import java.util.List;
 
+import abd.p1.controller.UserController;
 import abd.p1.model.Usuario;
 
 /**
@@ -23,8 +24,8 @@ public class AvatarPanel2 extends javax.swing.JFrame {
 	/**
      * Creates new form AvatarPanel2
      */
-    public AvatarPanel2(Usuario u, List<String> aficiones) {
-        initComponents(u, aficiones);
+    public AvatarPanel2(Usuario u, List<String> aficiones, boolean miPerfil, UserController c) {
+        initComponents(u, aficiones,miPerfil, c);
     }
 
     /**
@@ -34,9 +35,9 @@ public class AvatarPanel2 extends javax.swing.JFrame {
      */
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents(Usuario u, List<String> aficiones) {
+    private void initComponents(Usuario u, List<String> aficiones, boolean miPerfil, UserController c) {
 
-        userPanel1 = new abd.p1.view.UserPanel(u, aficiones);
+        userPanel1 = new abd.p1.view.UserPanel(u, aficiones, miPerfil, c);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 

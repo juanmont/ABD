@@ -23,4 +23,20 @@ public class UserController {
 	public List<String> selectAficionesByUsuario(String email) {
 		return dao.selectAficionesByUsuario(email);
 	}
+	
+	public List<Usuario> selectAmigosByEmail(String email) {
+		return dao.selectAmigosByEmail(email);
+	}
+	
+	public void insertUser(Usuario u){
+		dao.insertUser(u);
+	}
+	
+	public void deleteUser(String email){
+		dao.deleteUser(email);
+	}
+	
+	public void updateUser(String email, Usuario c){
+		dao.updateUser(email, c);
+	}
 }

@@ -29,6 +29,7 @@ public class AvatarPanel extends javax.swing.JPanel {
         this(defaultIcon);
     }
     
+    
     /**
      * Creates new form AvatarPanel
      */

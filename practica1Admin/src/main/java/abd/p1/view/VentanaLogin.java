@@ -7,8 +7,11 @@ package abd.p1.view;
 
 import abd.p1.controller.LoginController;
 import abd.p1.controller.UserController;
+import abd.p1.model.Contacto;
+import abd.p1.model.Genero;
 import abd.p1.model.Usuario;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -154,7 +157,13 @@ public class VentanaLogin extends java.awt.Dialog {
         		System.out.println("Has entrado!!!!");
         		Usuario u = controlUsuarios.selectUsuarioByEmail(email);
         		List<String> aficiones = controlUsuarios.selectAficionesByUsuario(email);
-        		userPanel = new AvatarPanel2(u, aficiones);
+        		userPanel = new AvatarPanel2(u, aficiones,true, controlUsuarios);
+        		AvatarPanel2 a =new AvatarPanel2(u, aficiones,false, controlUsuarios);
+        		a.setVisible(true);
+        		controlUsuarios.selectAmigosByEmail(email);
+        		//controlUsuarios.deleteUser("user3");
+        		//Usuario u2 = new Usuario("user3", "user3", "user3", Genero.FEMENINO, Contacto.HOMBRES, 0.00, 0.00, new Date(93, 2, 15), null, null, "esta es su descripccion");
+        		//controlUsuarios.insertUser(u2);
         		userPanel.setVisible(true);
         		this.dispose();
         		return true;
