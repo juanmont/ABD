@@ -25,14 +25,14 @@ public class DAOUsuarios {
 		Session sesion = this.sesion.openSession();
 		Query query = sesion.createQuery("select elements(u.aficiones) from Usuario u Where u.email = :email");
 		query.setString("email", email);
-		return query.list();	
+		return query.list();
 	}
 	
 	public List<Usuario> selectAmigosByEmail(String email) {
 		Session sesion = this.sesion.openSession();
 		Query query = sesion.createQuery("select elements(u.amigos) from Usuario u Where u.email = :email");
 		query.setString("email", email);
-		return query.list();	
+		return query.list();
 	}
 	
 	public void insertUser(Usuario u){

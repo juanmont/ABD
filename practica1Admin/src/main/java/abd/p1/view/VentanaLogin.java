@@ -158,8 +158,6 @@ public class VentanaLogin extends java.awt.Dialog {
         		Usuario u = controlUsuarios.selectUsuarioByEmail(email);
         		List<String> aficiones = controlUsuarios.selectAficionesByUsuario(email);
         		userPanel = new AvatarPanel2(u, aficiones,true, controlUsuarios);
-        		AvatarPanel2 a =new AvatarPanel2(u, aficiones,false, controlUsuarios);
-        		a.setVisible(true);
         		controlUsuarios.selectAmigosByEmail(email);
         		//controlUsuarios.deleteUser("user3");
         		//Usuario u2 = new Usuario("user3", "user3", "user3", Genero.FEMENINO, Contacto.HOMBRES, 0.00, 0.00, new Date(93, 2, 15), null, null, "esta es su descripccion");
