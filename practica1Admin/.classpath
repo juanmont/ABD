@@ -27,5 +27,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/home/anonimo/workspace/practica1Admin/lib/DateChooser.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

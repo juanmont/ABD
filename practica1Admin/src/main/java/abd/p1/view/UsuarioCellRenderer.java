@@ -16,13 +16,27 @@ import abd.p1.model.Usuario;
  *
  * @author adrianpanaderogonzalez
  */
-public class UsuarioCellRenderer implements ListCellRenderer<Usuario>{
+public class UsuarioCellRenderer extends ElementoListaUsuario implements ListCellRenderer<Usuario>{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Override
-	public Component getListCellRendererComponent(JList<? extends Usuario> arg0, Usuario arg1, int arg2, boolean arg3,
-			boolean arg4) {
-		// TODO Auto-generated method stub
-		return null;
+	public Component getListCellRendererComponent(JList<? extends Usuario> lista, Usuario value, int index, 
+                boolean isSelected, boolean cellHasFocus) {
+			//this.setImagen(value.getImagen());
+            this.setNombre(value.getNombre());
+            this.setEdad(value.calcularEdad(value.getFecha_nacimiento()));
+            this.setOpaque(true);
+            /*if (isSelected) {
+                this.setBackground(Color.YELLOW);
+            } else {
+                this.setBackground(Color.WHITE);
+            }*/
+            
+            return this;    
 	}
     
 }

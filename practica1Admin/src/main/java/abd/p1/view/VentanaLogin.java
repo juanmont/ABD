@@ -7,11 +7,8 @@ package abd.p1.view;
 
 import abd.p1.controller.LoginController;
 import abd.p1.controller.UserController;
-import abd.p1.model.Contacto;
-import abd.p1.model.Genero;
 import abd.p1.model.Usuario;
 
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -26,7 +23,7 @@ public class VentanaLogin extends java.awt.Dialog {
     private LoginController control;
     private UserController controlUsuarios;
     private SessionFactory sesion;
-    private AvatarPanel2 userPanel;
+    private VentanaPrincipal ventanaPrincipal;
     /**
      * Creates new form NewDialog
      */
@@ -154,15 +151,18 @@ public class VentanaLogin extends java.awt.Dialog {
         String pass = new String(password);
         if (email != "" && pass != "") {
         	if(control.login(email, pass)) {
-        		System.out.println("Has entrado!!!!");
+        		//System.out.println("Has entrado!!!!");
         		Usuario u = controlUsuarios.selectUsuarioByEmail(email);
         		List<String> aficiones = controlUsuarios.selectAficionesByUsuario(email);
-        		userPanel = new AvatarPanel2(u, aficiones,true, controlUsuarios);
         		controlUsuarios.selectAmigosByEmail(email);
+        		ventanaPrincipal = new VentanaPrincipal(u, aficiones, controlUsuarios);
+        		//userPanel = new AvatarPanel2(u, aficiones,true, controlUsuarios);
+
         		//controlUsuarios.deleteUser("user3");
         		//Usuario u2 = new Usuario("user3", "user3", "user3", Genero.FEMENINO, Contacto.HOMBRES, 0.00, 0.00, new Date(93, 2, 15), null, null, "esta es su descripccion");
         		//controlUsuarios.insertUser(u2);
-        		userPanel.setVisible(true);
+        		//userPanel.setVisible(true);
+        		ventanaPrincipal.setVisible(true);
         		this.dispose();
         		return true;
         	}

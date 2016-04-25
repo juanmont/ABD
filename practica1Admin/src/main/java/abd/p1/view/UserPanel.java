@@ -34,6 +34,7 @@ public class UserPanel extends javax.swing.JPanel {
     private Usuario uCambio;
     private Usuario u;
     private UserController control;
+    private CambioUsuario cambioUsuario;
     
     /**
      * Creates new form UserPanel
@@ -48,12 +49,15 @@ public class UserPanel extends javax.swing.JPanel {
         }
         labelNombre.setText(u.getNombre());
         labelEdad.setText(u.getEdad() + " años");
+        
+        if(u.getImagen() != null)
+        	avatarPanel1.setIcon(new ImageIcon(u.getImagen()));
     }
 
     private void desactivarBotones() {
 		buttonAnadirAficion.setVisible(false);
 		buttonEditarAficion.setVisible(false);
-                buttonEliminarAficion.setVisible(false);
+        buttonEliminarAficion.setVisible(false);
 		buttonCancelar.setText("Volver");
 		buttonAvatar.setVisible(false);
 		buttonFechaNacimiento.setVisible(false);
@@ -64,7 +68,7 @@ public class UserPanel extends javax.swing.JPanel {
 		buttonSexo.setVisible(false);
 		jTextArea1.setEnabled(false);
 		listaAficiones.setPreferredSize(new Dimension(300,500));
-                listaAficiones.setEnabled(false);
+        listaAficiones.setEnabled(false);
 		
 	}
 
@@ -358,18 +362,10 @@ public class UserPanel extends javax.swing.JPanel {
                     .addComponent(buttonPassword))
                 .addContainerGap())
         );
-
-        if(u.getImagen() != null)
-        	avatarPanel1.setIcon(new ImageIcon(u.getImagen()));
     }// </editor-fold>//GEN-END:initComponents
 
     protected void buttonNombreActionPerformed(ActionEvent evt) {
-    	String seleccion = JOptionPane.showInputDialog(
-    			   this,
-    			   "¿Cual es tu nuevo nombre?",
-    			   JOptionPane.QUESTION_MESSAGE);
-    	labelNombre.setText(seleccion);
-    	uCambio.setNombre(seleccion);
+    	CambioUsuario.createCambioUsuario(null, true,"nombre", false, "");
 	}
 
 	protected void buttonFechaNacimientoActionPerformed(ActionEvent evt) {
@@ -409,7 +405,7 @@ public class UserPanel extends javax.swing.JPanel {
 
 	protected void buttonCancelarActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
-		
+		this.setVisible(false);
 	}
 
 	protected void buttonEliminarAficionActionPerformed1(ActionEvent evt) {
@@ -418,7 +414,7 @@ public class UserPanel extends javax.swing.JPanel {
 	}
 
 	private void buttonEditarAficionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditarAficionActionPerformed
-        // TODO add your handling code here:
+		CambioUsuario.createCambioUsuario(null, true,"aficion", true, listaAficiones.getSelectedValue());
     }//GEN-LAST:event_buttonEditarAficionActionPerformed
 
     private void buttonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuardarActionPerformed
@@ -430,7 +426,7 @@ public class UserPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonPasswordActionPerformed
 
     private void buttonAnadirAficionActionPerformed(ActionEvent evt) {
-		// TODO Auto-generated method stub
+    	CambioUsuario.createCambioUsuario(null, true,"aficion", false, "");
 		
 	}
 

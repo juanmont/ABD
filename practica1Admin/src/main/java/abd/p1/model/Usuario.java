@@ -22,9 +22,9 @@ public class Usuario {
 	private String password;
 	@Column(nullable = false)
 	private String nombre;
-	@Column(nullable = false)
+	@Enumerated(EnumType.ORDINAL)
 	private Genero genero;
-	@Column(nullable = false)
+	@Enumerated(EnumType.ORDINAL)
 	private Contacto contacto;
 	@Column(nullable = false)
 	private double latitud;

@@ -10,8 +10,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
-import abd.p1.model.Usuario;
-
 /**
  *
  * @author adrianpanaderogonzalez

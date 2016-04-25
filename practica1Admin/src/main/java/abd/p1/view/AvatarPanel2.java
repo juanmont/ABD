@@ -14,17 +14,22 @@ import abd.p1.model.Usuario;
  *
  * @author adrianpanaderogonzalez
  */
-public class AvatarPanel2 extends javax.swing.JFrame {
+public class AvatarPanel2 extends javax.swing.JDialog {
 
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	// Variables declaration - do not modify//GEN-BEGIN:variables
+    private abd.p1.view.UserPanel userPanel1;
+    // End of variables declaration//GEN-END:variables
 
 	/**
      * Creates new form AvatarPanel2
      */
-    public AvatarPanel2(Usuario u, List<String> aficiones, boolean miPerfil, UserController c) {
+    public AvatarPanel2(java.awt.Frame parent, boolean modal,Usuario u, List<String> aficiones, boolean miPerfil, UserController c) {
+    	super(parent, modal);
         initComponents(u, aficiones,miPerfil, c);
     }
 
@@ -39,7 +44,7 @@ public class AvatarPanel2 extends javax.swing.JFrame {
 
         userPanel1 = new abd.p1.view.UserPanel(u, aficiones, miPerfil, c);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -60,9 +65,4 @@ public class AvatarPanel2 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-   
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private abd.p1.view.UserPanel userPanel1;
-    // End of variables declaration//GEN-END:variables
 }
