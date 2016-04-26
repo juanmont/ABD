@@ -5,6 +5,7 @@
  */
 package abd.p1.view;
 
+import abd.p1.controller.ListUserController;
 import abd.p1.controller.LoginController;
 import abd.p1.controller.UserController;
 import abd.p1.model.Usuario;
@@ -57,18 +58,6 @@ public class VentanaLogin extends java.awt.Dialog {
         });
 
         email.setText("Dirección de correo:");
-
-        jTextFieldEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldEmailActionPerformed(evt);
-            }
-        });
-
-        jPasswordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordFieldActionPerformed(evt);
-            }
-        });
 
         password.setText("Contraseña:");
 
@@ -137,13 +126,6 @@ public class VentanaLogin extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
-    private void jTextFieldEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldEmailActionPerformed
-
-    private void jPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordFieldActionPerformed
 
     private boolean jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
         String email = jTextFieldEmail.getText();
@@ -151,27 +133,29 @@ public class VentanaLogin extends java.awt.Dialog {
         String pass = new String(password);
         if (email != "" && pass != "") {
         	if(control.login(email, pass)) {
-        		//System.out.println("Has entrado!!!!");
         		Usuario u = controlUsuarios.selectUsuarioByEmail(email);
-        		List<String> aficiones = controlUsuarios.selectAficionesByUsuario(email);
-        		controlUsuarios.selectAmigosByEmail(email);
-        		ventanaPrincipal = new VentanaPrincipal(u, aficiones, controlUsuarios);
-        		//userPanel = new AvatarPanel2(u, aficiones,true, controlUsuarios);
-
-        		//controlUsuarios.deleteUser("user3");
-        		//Usuario u2 = new Usuario("user3", "user3", "user3", Genero.FEMENINO, Contacto.HOMBRES, 0.00, 0.00, new Date(93, 2, 15), null, null, "esta es su descripccion");
-        		//controlUsuarios.insertUser(u2);
-        		//userPanel.setVisible(true);
+        		u.setAficiones(controlUsuarios.selectAficionesByUsuario(email));
+        		/*List<Usuario> l = controlUsuarios.selectAmigosByEmail(email);
+        		u.setAmigos(l);*/
+        		ventanaPrincipal = new VentanaPrincipal(u, controlUsuarios, new ListUserController(sesion));
         		ventanaPrincipal.setVisible(true);
         		this.dispose();
         		return true;
         	}
+        	
         }
         return false;
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
     private void jButtonNuevoUsarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoUsarioActionPerformed
-        // TODO add your handling code here:
+    	 String email = jTextFieldEmail.getText();
+         char[] password = jPasswordField.getPassword();
+         String pass = new String(password);
+         if (email != "" && pass != "") {
+	    	Usuario u2 = new Usuario(email, pass, "", null, null, 0.00, 0.00, null, null, null, null);
+			controlUsuarios.insertUser(u2);
+			new AvatarPanel2(null, true, u2, true, controlUsuarios).setVisible(true);
+         }
     }//GEN-LAST:event_jButtonNuevoUsarioActionPerformed
 
     /**

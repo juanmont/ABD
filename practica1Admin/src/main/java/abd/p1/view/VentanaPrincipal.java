@@ -13,6 +13,9 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListModel;
 
+import org.hibernate.SessionFactory;
+
+import abd.p1.controller.ListUserController;
 import abd.p1.controller.UserController;
 import abd.p1.model.Contacto;
 import abd.p1.model.Genero;
@@ -27,24 +30,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
 	private UserController controlUsuarios;
 	private Usuario u;
-	private List<String> aficiones;
 	private AvatarPanel2 userPanel;
 	private DefaultListModel<Usuario> modelo;
+	private ListUserController controlListaUsuarios;
 	
     /**
      * Creates new form VentanaPrincipal
      * @param controlUsuarios 
-     * @param aficiones 
      * @param u 
      */
-    public VentanaPrincipal(Usuario u, List<String> aficiones, UserController controlUsuarios) {
+    public VentanaPrincipal(Usuario u, UserController controlUsuarios, ListUserController controlListaUsuarios) {
         initComponents();
-        this.u = controlUsuarios.selectUsuarioByEmail(u.getEmail());
-        this.aficiones = controlUsuarios.selectAficionesByUsuario(u.getEmail());
+        this.u = u;
         this.controlUsuarios = controlUsuarios;
-        //Usuario u = new Usuario("email", "password", "nombre", Genero.FEMENINO, Contacto.AMBOS, 0.0, 0.0, new Date(92, 2, 14), null, null, "descripcion");
+        this.controlListaUsuarios = controlListaUsuarios;
         modelo = new DefaultListModel<>();
-       // modelo.addElement(u);
+        List<Usuario> l = this.controlListaUsuarios.getAllUsers();
+        for(Usuario usuario: l){
+        	modelo.addElement(usuario);
+        }
         listaUsuarios.setModel(modelo);
         listaUsuarios.setCellRenderer(new UsuarioCellRenderer());
     }
@@ -192,7 +196,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBoxAmigosActionPerformed
 
     private void jButtonModificarPerfilActionPerformed(ActionEvent evt) {
-    	userPanel = new AvatarPanel2(this, true, u, aficiones, true, controlUsuarios);
+    	userPanel = new AvatarPanel2(this, true, u, true, controlUsuarios);
 		userPanel.setVisible(true);
 		this.setVisible(false);
 	}

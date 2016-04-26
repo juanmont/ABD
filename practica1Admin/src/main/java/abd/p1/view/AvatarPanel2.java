@@ -28,9 +28,9 @@ public class AvatarPanel2 extends javax.swing.JDialog {
 	/**
      * Creates new form AvatarPanel2
      */
-    public AvatarPanel2(java.awt.Frame parent, boolean modal,Usuario u, List<String> aficiones, boolean miPerfil, UserController c) {
+    public AvatarPanel2(java.awt.Frame parent, boolean modal,Usuario u, boolean miPerfil, UserController c) {
     	super(parent, modal);
-        initComponents(u, aficiones,miPerfil, c);
+        initComponents(u,miPerfil, c);
     }
 
     /**
@@ -40,11 +40,11 @@ public class AvatarPanel2 extends javax.swing.JDialog {
      */
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents(Usuario u, List<String> aficiones, boolean miPerfil, UserController c) {
+    private void initComponents(Usuario u, boolean miPerfil, UserController c) {
 
-        userPanel1 = new abd.p1.view.UserPanel(u, aficiones, miPerfil, c);
+        userPanel1 = new abd.p1.view.UserPanel(u, miPerfil, c);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

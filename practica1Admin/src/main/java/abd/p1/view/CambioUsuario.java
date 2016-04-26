@@ -5,6 +5,7 @@
  */
 package abd.p1.view;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 
 /**
@@ -13,10 +14,7 @@ import java.awt.event.ActionEvent;
  */
 public class CambioUsuario extends javax.swing.JDialog {
 	private boolean aceptar;
-    /**
-	 * 
-	 */
-	
+
 	public static String createCambioUsuario(java.awt.Frame parent, boolean modal,String label, boolean editar, String edicion){
 		CambioUsuario cu = new CambioUsuario(parent, modal, label, editar, edicion);
 		cu.setVisible(true);
@@ -75,7 +73,7 @@ public class CambioUsuario extends javax.swing.JDialog {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(super.getContentPane());
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,6 +105,7 @@ public class CambioUsuario extends javax.swing.JDialog {
                     .addComponent(btAceptar)
                     .addComponent(btCancelar)))
         );
+        this.setSize(new Dimension(400,200));
     }// </editor-fold>//GEN-END:initComponents
 
     protected void btCancelarActionPerformed(ActionEvent evt) {

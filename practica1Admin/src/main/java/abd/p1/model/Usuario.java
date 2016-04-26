@@ -12,6 +12,9 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
 @Entity
 @Table(name = "Usuario")
 public class Usuario {
@@ -149,13 +152,13 @@ public class Usuario {
 		aficiones.add(aficiones.indexOf(aOld), aNew);
 	}
 
-	/*public List<Aficiones> getAficiones() {
+	public List<String> getAficiones() {
 		return aficiones;
 	}
 
-	public void setAficiones(List<Aficiones> aficiones) {
+	public void setAficiones(List<String> aficiones) {
 		this.aficiones = aficiones;
-	}*/
+	}
 
 	public String getDescripcion() {
 		return descripcion;
@@ -197,5 +200,12 @@ public class Usuario {
 			return age;
 
 		}
+
+	public void setAmigos(List<Usuario> selectAmigosByEmail) {
+		// TODO Auto-generated method stub
+			for(Usuario u: selectAmigosByEmail)
+				this.amigos.add(u);
+
+	}
 
 }

@@ -7,6 +7,7 @@ package abd.p1.view;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -35,19 +36,23 @@ public class UserPanel extends javax.swing.JPanel {
     private Usuario u;
     private UserController control;
     private CambioUsuario cambioUsuario;
+    private DefaultListModel<String> modelo;
+    private boolean cambioAficiones;
     
     /**
      * Creates new form UserPanel
      */
-    public UserPanel(Usuario u, List<String> aficiones, boolean miPerfil, UserController c) {
+    public UserPanel(Usuario u, boolean miPerfil, UserController c) {
+    	cambioAficiones = false;
     	this.u = u;
     	this.control = c;
     	uCambio = new Usuario();
-        initComponents(u, aficiones);
+        initComponents(u, u.getAficiones());
         if(!miPerfil){
         	desactivarBotones();
         }
         labelNombre.setText(u.getNombre());
+        if(u.getFecha_nacimiento() != null)
         labelEdad.setText(u.getEdad() + " años");
         
         if(u.getImagen() != null)
@@ -176,7 +181,7 @@ public class UserPanel extends javax.swing.JPanel {
                 buttonAvatarActionPerformed(evt);
             }
         });
-
+        
         labelDescripcion.setText("Descripción:");
 
         jTextArea1.setColumns(20);
@@ -186,10 +191,12 @@ public class UserPanel extends javax.swing.JPanel {
 
         labelAficiones.setText("Aficiones:");
 
-        DefaultListModel<String> modelo = new DefaultListModel<String>();
+        modelo = new DefaultListModel<String>();
         listaAficiones.setModel(modelo);
-        for(String s: aficiones){
-        	modelo.addElement(s);
+        if(aficiones != null){
+	        for(String s: aficiones){
+	        	modelo.addElement(s);
+	        }
         }
         scrollAficiones.setViewportView(listaAficiones);
 
@@ -230,11 +237,11 @@ public class UserPanel extends javax.swing.JPanel {
         });
         
         labelSexo.setText("Sexo:");
-        
+        if(u.getGenero() != null)
         labelSexoGenero.setText(u.getGenero().toString());
 
         labelBusca.setText("Busca:");
-
+        if(u.getContacto() != null)
         labelBuscaGenero.setText(u.getContacto().toString());
 
         buttonCancelar.setText("Cancelar");
@@ -365,7 +372,8 @@ public class UserPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     protected void buttonNombreActionPerformed(ActionEvent evt) {
-    	CambioUsuario.createCambioUsuario(null, true,"nombre", false, "");
+    	labelNombre.setText(CambioUsuario.createCambioUsuario(null, true,"aficion", false, ""));
+    	uCambio.setNombre(labelNombre.getText());
 	}
 
 	protected void buttonFechaNacimientoActionPerformed(ActionEvent evt) {
@@ -378,29 +386,21 @@ public class UserPanel extends javax.swing.JPanel {
 	}
 
 	protected void buttonSexoActionPerformed(ActionEvent evt) {
-		Genero seleccion = (Genero) JOptionPane.showInputDialog(
-				   this,
-				   "Selecciona tu sexo",
-				   "Opciones",
-				   JOptionPane.QUESTION_MESSAGE,
-				   null,  // null para icono defecto
-				   Genero.values(), 
-				   Genero.MASCULINO);
-		labelSexoGenero.setText(seleccion.toString());
-		uCambio.setGenero(seleccion);
+		List<String> lista = new ArrayList<String>();
+		for(Genero g: Genero.values())
+			lista.add(g.toString());
+		String seleccion = CambiarComboBox.createCambioComboBox(null, true, "Genero", lista);
+		labelSexoGenero.setText(seleccion);
+		uCambio.setGenero(Genero.valueOf(seleccion));
 	}
 
 	protected void buttonPreferenciaActionPerformed(ActionEvent evt) {
-		Contacto seleccion = (Contacto) JOptionPane.showInputDialog(
-				   this,
-				   "Selecciona lo que estas buscando",
-				   "opciones",
-				   JOptionPane.QUESTION_MESSAGE,
-				   null,  // null para icono defecto
-				   Contacto.values(), 
-				   Contacto.HOMBRES);
-		labelBuscaGenero.setText(seleccion.toString());
-		uCambio.setContacto(seleccion);
+		List<String> lista = new ArrayList<String>();
+		for(Contacto g: Contacto.values())
+			lista.add(g.toString());
+		String seleccion = CambiarComboBox.createCambioComboBox(null, true, "Preferencia", lista);
+		labelBuscaGenero.setText(seleccion);
+		uCambio.setContacto(Contacto.valueOf(seleccion));
 	}
 
 	protected void buttonCancelarActionPerformed(ActionEvent evt) {
@@ -408,30 +408,45 @@ public class UserPanel extends javax.swing.JPanel {
 		this.setVisible(false);
 	}
 
+	private void buttonAnadirAficionActionPerformed(ActionEvent evt) {
+    	modelo.addElement(CambioUsuario.createCambioUsuario(null, true,"aficion", false, ""));
+    	cambioAficiones = true;
+	}
+	
 	protected void buttonEliminarAficionActionPerformed1(ActionEvent evt) {
-		// TODO Auto-generated method stub
-		
+		int pos = listaAficiones.getSelectedIndex();
+		modelo.remove(pos);
+		cambioAficiones = true;
 	}
 
-	private void buttonEditarAficionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditarAficionActionPerformed
-		CambioUsuario.createCambioUsuario(null, true,"aficion", true, listaAficiones.getSelectedValue());
-    }//GEN-LAST:event_buttonEditarAficionActionPerformed
+	private void buttonEditarAficionActionPerformed(java.awt.event.ActionEvent evt) {
+		int pos = listaAficiones.getSelectedIndex();
+		String aficion = CambioUsuario.createCambioUsuario(null, true,"aficion", true, listaAficiones.getSelectedValue());
+		modelo.set(pos, aficion);
+		cambioAficiones = true;
+    }
 
-    private void buttonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuardarActionPerformed
+    private void buttonGuardarActionPerformed(java.awt.event.ActionEvent evt) {
+    	if(cambioAficiones){
+    		List<String> lista = new ArrayList<String>();
+    		for(int i = 0; i < listaAficiones.getModel().getSize(); i++)
+    			lista.add(listaAficiones.getModel().getElementAt(i));
+    		control.updateAficionesUser(u.getEmail(), lista);
+    	}
         control.updateUser(u.getEmail(), uCambio);
-    }//GEN-LAST:event_buttonGuardarActionPerformed
-
-    private void buttonPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_buttonPasswordActionPerformed
-
-    private void buttonAnadirAficionActionPerformed(ActionEvent evt) {
-    	CambioUsuario.createCambioUsuario(null, true,"aficion", false, "");
-		
-	}
+    }
 
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+
+	private void buttonPasswordActionPerformed(java.awt.event.ActionEvent evt) {
+        uCambio.setPassword(CambioPassword.createCambioPassword(null, true, u.getPassword()));
+    }
+
+    
+
+
+
+	// Variables declaration - do not modify//GEN-BEGIN:variables
     private abd.p1.view.AvatarPanel avatarPanel1;
     private javax.swing.JButton buttonAnadirAficion;
     private javax.swing.JButton buttonAvatar;
