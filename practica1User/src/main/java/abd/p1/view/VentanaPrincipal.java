@@ -5,12 +5,16 @@
  */
 package abd.p1.view;
 
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 
 import org.hibernate.SessionFactory;
@@ -26,7 +30,7 @@ import abd.p1.model.Usuario;
  * @author adrianpanaderogonzalez
  */
 @SuppressWarnings("serial")
-public class VentanaPrincipal extends javax.swing.JFrame {
+public class VentanaPrincipal extends javax.swing.JDialog {
 
 	private UserController controlUsuarios;
 	private Usuario u;
@@ -39,8 +43,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      * @param controlUsuarios 
      * @param u 
      */
-    public VentanaPrincipal(Usuario u, UserController controlUsuarios, ListUserController controlListaUsuarios) {
-        initComponents();
+    public VentanaPrincipal(Frame parent, boolean modal,Usuario u, UserController controlUsuarios, ListUserController controlListaUsuarios) {
+    	super(parent,modal);
+    	initComponents();
         this.u = u;
         this.controlUsuarios = controlUsuarios;
         this.controlListaUsuarios = controlListaUsuarios;
@@ -73,8 +78,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jButtonVerPerfil = new javax.swing.JButton();
         jPanelPreguntas = new javax.swing.JPanel();
         jPanelMensajes = new javax.swing.JPanel();
+        
+        jTextFieldNombre.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(jCheckBoxNombre.isSelected()){
+					String name = jTextFieldNombre.getText();
+			    	List<Usuario> lista = new ArrayList<Usuario>();
+			    	if(name != ""){
+			    		lista = controlListaUsuarios.getAllUsersWithName(name, u.getContacto());
+			    		modelo.removeAllElements();
+			    		 for(Usuario usuario: lista){
+			    	        	modelo.addElement(usuario);
+			    	        }
+			    	}
+				}// TODO Auto-generated method stub
+				
+			}
+		});
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
 
         jScrollPane1.setViewportView(listaUsuarios);
 
@@ -196,13 +220,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBoxAmigosActionPerformed
 
     private void jButtonModificarPerfilActionPerformed(ActionEvent evt) {
-    	userPanel = new AvatarPanel2(this, true, u, true, controlUsuarios);
-		userPanel.setVisible(true);
-		this.setVisible(false);
+    	userPanel = new AvatarPanel2(null, true, u, true, controlUsuarios);
+    	this.setVisible(false);
+    	userPanel.setVisible(true);
+		this.setVisible(true);
 	}
     
-    private void jButtonVerPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerPerfilActionPerformed
-        // TODO add your handling code here:
+    private void jButtonVerPerfilActionPerformed(java.awt.event.ActionEvent evt) {
+  
+    	Usuario u2 = listaUsuarios.getSelectedValue();
+    	if(u2 != null){
+    	u2.setAficiones(controlUsuarios.selectAficionesByUsuario(u2.getEmail()));//GEN-FIRST:event_jButtonVerPerfilActionPerformed
+    	userPanel = new AvatarPanel2(null, true, u2, false, controlUsuarios);
+		userPanel.setVisible(true);
+		this.setVisible(false);
+    	}
+    	else{
+    		JOptionPane.showMessageDialog(null, "Debes seleccionar un usuario de la lista", "Error", JOptionPane.ERROR);
+    	}
     }//GEN-LAST:event_jButtonVerPerfilActionPerformed
 
     

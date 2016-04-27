@@ -90,17 +90,11 @@ public class DAOUsuarios {
 		
 		if(cambio.getPassword() != null)
 			u.setPassword(cambio.getPassword());
+		
+		if(cambio.getAficiones() != null)
+			u.setAficiones(cambio.getAficiones());
 		////////////////////////////////////////////////////////////
 		
 		tr.commit();
-	}
-
-	public void updateAficionesUser(String email, List<String> lista) {
-		Session sesion = this.sf.openSession();
-			Query query = sesion.createQuery("Update elements(u.aficiones) from Usuario u SET elements(u.:lista) Where u.email = :email");
-			query.setParameterList("lista", lista);
-			query.setString("email", email);
-		sesion.close();
-	}
-	
+	}	
 }

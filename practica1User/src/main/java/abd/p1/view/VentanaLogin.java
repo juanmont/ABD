@@ -9,11 +9,14 @@ import abd.p1.controller.ListUserController;
 import abd.p1.controller.LoginController;
 import abd.p1.controller.UserController;
 import abd.p1.model.Usuario;
+import abd.p1.model.ValidadorEmail;
 
 import java.util.List;
 
-import org.hibernate.SessionFactory;
+import javax.swing.JOptionPane;
 
+import org.hibernate.SessionFactory;
+	
 /**
  *
  * @author adrianpanaderogonzalez
@@ -25,14 +28,18 @@ public class VentanaLogin extends java.awt.Dialog {
     private UserController controlUsuarios;
     private SessionFactory sesion;
     private VentanaPrincipal ventanaPrincipal;
+    private boolean login;
+    private Usuario usuario;
     /**
      * Creates new form NewDialog
+     * @param cU 
      */
-    public VentanaLogin(java.awt.Frame parent, boolean modal, SessionFactory sf) {
+    public VentanaLogin(java.awt.Frame parent, boolean modal, SessionFactory sf, UserController cU) {
         super(parent, modal);
         this.sesion = sf;
+        login = false;
         control = new LoginController(sesion);
-        controlUsuarios = new UserController(sesion);
+        controlUsuarios = cU;
         initComponents();
     }
 
@@ -127,35 +134,39 @@ public class VentanaLogin extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
 
-    private boolean jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
+    private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
         String email = jTextFieldEmail.getText();
         char[] password = jPasswordField.getPassword();
         String pass = new String(password);
-        if (email != "" && pass != "") {
-        	if(control.login(email, pass)) {
-        		Usuario u = controlUsuarios.selectUsuarioByEmail(email);
-        		u.setAficiones(controlUsuarios.selectAficionesByUsuario(email));
-        		/*List<Usuario> l = controlUsuarios.selectAmigosByEmail(email);
-        		u.setAmigos(l);*/
-        		ventanaPrincipal = new VentanaPrincipal(u, controlUsuarios, new ListUserController(sesion));
-        		ventanaPrincipal.setVisible(true);
-        		this.dispose();
-        		return true;
-        	}
-        	
-        }
-        return false;
+        if(ValidadorEmail.validarEmail(email)){
+	        if (email != "" && pass != "") {
+	        	if(control.login(email, pass)) {
+	        		usuario = controlUsuarios.selectUsuarioByEmail(email);
+	        		usuario.setAficiones(controlUsuarios.selectAficionesByUsuario(email));
+	        		List<Usuario> l = controlUsuarios.selectAmigosByEmail(email);
+	        		usuario.setAmigos(l);
+	        		login = true;
+	        		this.dispose();
+	        		this.setVisible(false);
+	        	}
+	        }
+        }else
+       	 JOptionPane.showMessageDialog(null, "Debes introducir un mail" , "Error", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
     private void jButtonNuevoUsarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoUsarioActionPerformed
     	 String email = jTextFieldEmail.getText();
          char[] password = jPasswordField.getPassword();
          String pass = new String(password);
-         if (email != "" && pass != "") {
-	    	Usuario u2 = new Usuario(email, pass, "", null, null, 0.00, 0.00, null, null, null, null);
-			controlUsuarios.insertUser(u2);
-			new AvatarPanel2(null, true, u2, true, controlUsuarios).setVisible(true);
+         if(ValidadorEmail.validarEmail(email)){
+	         if (email != "" && pass != "") {
+		    	Usuario u2 = new Usuario(email, pass, "", null, null, 0.00, 0.00, null, null, null, null);
+				controlUsuarios.insertUser(u2);
+				new AvatarPanel2(null, true, u2, true, controlUsuarios).setVisible(true);
+	         }
          }
+         else
+        	 JOptionPane.showMessageDialog(null, "Debes introducir un mail" , "Error", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_jButtonNuevoUsarioActionPerformed
 
     /**
@@ -171,4 +182,13 @@ public class VentanaLogin extends java.awt.Dialog {
     private javax.swing.JTextField jTextFieldEmail;
     private javax.swing.JLabel password;
     // End of variables declaration//GEN-END:variables
+	public boolean isLogin() {
+		// TODO Auto-generated method stub
+		return login;
+	}
+
+	public Usuario getUser() {
+		// TODO Auto-generated method stub
+		return usuario;
+	}
 }

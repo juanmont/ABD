@@ -30,6 +30,7 @@ public class CambiarComboBox extends java.awt.Dialog {
     public CambiarComboBox(java.awt.Frame parent, boolean modal, String label, List<String> lista) {
         super(parent, modal);
         initComponents();
+        this.setSize(350, 120);
         String frase =labelComboBox.getText();
         frase += label;
         labelComboBox.setText(frase);

@@ -5,8 +5,10 @@
  */
 package abd.p1.view;
 
+import java.awt.Color;
 import java.awt.Component;
 
+import javax.swing.ImageIcon;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
@@ -26,17 +28,17 @@ public class UsuarioCellRenderer extends ElementoListaUsuario implements ListCel
 	@Override
 	public Component getListCellRendererComponent(JList<? extends Usuario> lista, Usuario value, int index, 
                 boolean isSelected, boolean cellHasFocus) {
-			//this.setImagen(value.getImagen());
+			if(value.getImagen() != null)
+				setImagen(new ImageIcon(value.getImagen()));
             this.setNombre(value.getNombre());
             this.setEdad(value.calcularEdad(value.getFecha_nacimiento()));
             this.setOpaque(true);
-            /*if (isSelected) {
-                this.setBackground(Color.YELLOW);
+            if (isSelected) {
+                this.setBackground(Color.GRAY);
             } else {
                 this.setBackground(Color.WHITE);
-            }*/
-            
-            return this;    
+            }
+            return this; 
 	}
     
 }

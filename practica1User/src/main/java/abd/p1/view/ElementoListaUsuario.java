@@ -5,6 +5,8 @@
  */
 package abd.p1.view;
 
+import javax.swing.ImageIcon;
+
 //import javax.swing.ImageIcon;
 
 /**
@@ -21,6 +23,7 @@ public class ElementoListaUsuario extends javax.swing.JPanel {
     private static final ImageIcon defaultIcon = new ImageIcon(AvatarPanel.class.getResource("homer.png"))*/
     private String nombre = "Luke";
     private int edad = 25;
+
     
     /**
      * Creates new form ElementoListaUsuario
@@ -38,10 +41,11 @@ public class ElementoListaUsuario extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        avatarPanel = new abd.p1.view.AvatarPanel();
+        avatarPanel = new AvatarPanel();
         jLabelNombre = new javax.swing.JLabel();
         jLabelEdad = new javax.swing.JLabel();
 
+        
         javax.swing.GroupLayout avatarPanelLayout = new javax.swing.GroupLayout(avatarPanel);
         avatarPanel.setLayout(avatarPanelLayout);
         avatarPanelLayout.setHorizontalGroup(
@@ -105,6 +109,9 @@ public class ElementoListaUsuario extends javax.swing.JPanel {
 		jLabelEdad.setText(edad + " años");
 	}
 
+	public void setImagen(ImageIcon icono){
+		avatarPanel.setIcon(icono);
+	}
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
     private abd.p1.view.AvatarPanel avatarPanel;

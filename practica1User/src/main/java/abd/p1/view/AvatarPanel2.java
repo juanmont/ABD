@@ -7,6 +7,9 @@ package abd.p1.view;
 
 import java.util.List;
 
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+
 import abd.p1.controller.UserController;
 import abd.p1.model.Usuario;
 
@@ -43,6 +46,25 @@ public class AvatarPanel2 extends javax.swing.JDialog {
     private void initComponents(Usuario u, boolean miPerfil, UserController c) {
 
         userPanel1 = new abd.p1.view.UserPanel(u, miPerfil, c);
+        userPanel1.addAncestorListener(new AncestorListener() {
+			
+			@Override
+			public void ancestorRemoved(AncestorEvent event) {
+				cerrar();
+			}
+			
+			@Override
+			public void ancestorMoved(AncestorEvent event) {
+
+				
+			}
+			
+			@Override
+			public void ancestorAdded(AncestorEvent event) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
 
@@ -65,4 +87,8 @@ public class AvatarPanel2 extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    private void cerrar(){
+    	this.setVisible(false);
+    }
 }

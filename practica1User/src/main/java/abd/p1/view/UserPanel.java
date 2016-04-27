@@ -7,6 +7,8 @@ package abd.p1.view;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.InputMethodListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +16,8 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import abd.p1.controller.UserController;
 import abd.p1.model.Contacto;
@@ -39,12 +43,14 @@ public class UserPanel extends javax.swing.JPanel {
     private CambioUsuario cambioUsuario;
     private DefaultListModel<String> modelo;
     private boolean cambioAficiones;
-    
-    /**
+    private boolean cambioDescripciones;
+
+	/**
      * Creates new form UserPanel
      */
     public UserPanel(Usuario u, boolean miPerfil, UserController c) {
     	cambioAficiones = false;
+    	cambioDescripciones = false;
     	this.u = u;
     	this.control = c;
     	uCambio = new Usuario();
@@ -64,7 +70,7 @@ public class UserPanel extends javax.swing.JPanel {
 		buttonAnadirAficion.setVisible(false);
 		buttonEditarAficion.setVisible(false);
         buttonEliminarAficion.setVisible(false);
-		buttonCancelar.setText("Volver");
+		buttonCancelar.setText("Enviar petición de amistad");
 		buttonAvatar.setVisible(false);
 		buttonFechaNacimiento.setVisible(false);
 		buttonGuardar.setVisible(false);
@@ -189,12 +195,30 @@ public class UserPanel extends javax.swing.JPanel {
         jTextArea1.setRows(5);
         jTextArea1.setText(u.getDescripcion());
         scrollDescripcion.setViewportView(jTextArea1);
+        jTextArea1.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				cambioDescripciones = true;
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				cambioDescripciones = true;
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				cambioDescripciones = true;
+			}
+		});
+        
 
         labelAficiones.setText("Aficiones:");
 
         modelo = new DefaultListModel<String>();
         listaAficiones.setModel(modelo);
-        if(aficiones != null){
+        if(aficiones != null && aficiones.size() != -1){
 	        for(String s: aficiones){
 	        	modelo.addElement(s);
 	        }
@@ -375,13 +399,19 @@ public class UserPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     protected void buttonNombreActionPerformed(ActionEvent evt) {
-    	labelNombre.setText(CambioUsuario.createCambioUsuario(null, true,"aficion", false, ""));
-    	uCambio.setNombre(labelNombre.getText());
+    	String cambioNombre = CambioUsuario.createCambioUsuario(null, true,"nombre", false, "");
+    	if(cambioNombre != null) {
+    		labelNombre.setText(cambioNombre);
+    		uCambio.setNombre(labelNombre.getText());
+    	}
 	}
 
 	protected void buttonFechaNacimientoActionPerformed(ActionEvent evt) {
-		uCambio.setFecha_nacimiento(new Date(CambioUsuarioFecha.createCambioFecha(null, true)));
-		labelEdad.setText(new Integer(uCambio.getEdad()).toString() + " años");
+		Date d = CambioUsuarioFecha.createCambioFecha(null, true);
+		if(d != null){
+			uCambio.setFecha_nacimiento(d);
+			labelEdad.setText(new Integer(uCambio.getEdad()).toString() + " años");
+		}
 	}
 
 	protected void buttonAvatarActionPerformed(ActionEvent evt) {
@@ -398,18 +428,22 @@ public class UserPanel extends javax.swing.JPanel {
 		List<String> lista = new ArrayList<String>();
 		for(Genero g: Genero.values())
 			lista.add(g.toString());
-		String seleccion = CambiarComboBox.createCambioComboBox(null, true, "Genero", lista);
-		labelSexoGenero.setText(seleccion);
-		uCambio.setGenero(Genero.valueOf(seleccion));
+		String seleccion = CambiarComboBox.createCambioComboBox(null, true, "genero", lista);
+		if(seleccion != null){
+			labelSexoGenero.setText(seleccion);
+			uCambio.setGenero(Genero.valueOf(seleccion));
+		}
 	}
 
 	protected void buttonPreferenciaActionPerformed(ActionEvent evt) {
 		List<String> lista = new ArrayList<String>();
 		for(Contacto g: Contacto.values())
 			lista.add(g.toString());
-		String seleccion = CambiarComboBox.createCambioComboBox(null, true, "Preferencia", lista);
-		labelBuscaGenero.setText(seleccion);
-		uCambio.setContacto(Contacto.valueOf(seleccion));
+		String seleccion = CambiarComboBox.createCambioComboBox(null, true, "preferencia", lista);
+		if(seleccion != null){
+			labelBuscaGenero.setText(seleccion);
+			uCambio.setContacto(Contacto.valueOf(seleccion));
+		}
 	}
 
 	protected void buttonCancelarActionPerformed(ActionEvent evt) {
@@ -424,24 +458,35 @@ public class UserPanel extends javax.swing.JPanel {
 	
 	protected void buttonEliminarAficionActionPerformed1(ActionEvent evt) {
 		int pos = listaAficiones.getSelectedIndex();
-		modelo.remove(pos);
-		cambioAficiones = true;
+		if (pos != -1) {
+			modelo.remove(pos);
+			cambioAficiones = true;
+		} else {
+			JOptionPane.showMessageDialog(null, "Debes seleccionar una afición", "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	private void buttonEditarAficionActionPerformed(java.awt.event.ActionEvent evt) {
 		int pos = listaAficiones.getSelectedIndex();
-		String aficion = CambioUsuario.createCambioUsuario(null, true,"aficion", true, listaAficiones.getSelectedValue());
-		modelo.set(pos, aficion);
-		cambioAficiones = true;
+		if (pos != -1) {
+			String aficion = CambioUsuario.createCambioUsuario(null, true,"aficion", true, listaAficiones.getSelectedValue());
+			modelo.set(pos, aficion);
+			cambioAficiones = true;
+		} else {
+			JOptionPane.showMessageDialog(null, "Debes seleccionar una afición", "Error", JOptionPane.ERROR_MESSAGE);
+		}
     }
 
     private void buttonGuardarActionPerformed(java.awt.event.ActionEvent evt) {
-    	/*if(cambioAficiones){
+    	if(cambioAficiones){
     		List<String> lista = new ArrayList<String>();
     		for(int i = 0; i < listaAficiones.getModel().getSize(); i++)
     			lista.add(listaAficiones.getModel().getElementAt(i));
-    		control.updateAficionesUser(u.getEmail(), lista);
-    	}*/
+    		uCambio.setAficiones(lista);
+    	}
+    	if(cambioDescripciones) {
+    		uCambio.setDescripcion(jTextArea1.getText());
+    	}
         control.updateUser(u.getEmail(), uCambio);
     }
 
@@ -450,10 +495,6 @@ public class UserPanel extends javax.swing.JPanel {
 	private void buttonPasswordActionPerformed(java.awt.event.ActionEvent evt) {
         uCambio.setPassword(CambioPassword.createCambioPassword(null, true, u.getPassword()));
     }
-
-    
-
-
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
     private abd.p1.view.AvatarPanel avatarPanel1;

@@ -19,7 +19,9 @@ public class CambioUsuario extends javax.swing.JDialog {
 		CambioUsuario cu = new CambioUsuario(parent, modal, label, editar, edicion);
 		cu.setVisible(true);
 		if(cu.aceptar){
-			return cu.jtTexto.getText();
+			if(cu.jtTexto.getText() != "")
+				return cu.jtTexto.getText();
+			else return null;
 		}else{
 			return null;
 		}
@@ -105,7 +107,7 @@ public class CambioUsuario extends javax.swing.JDialog {
                     .addComponent(btAceptar)
                     .addComponent(btCancelar)))
         );
-        this.setSize(new Dimension(400,200));
+        this.pack();
     }// </editor-fold>//GEN-END:initComponents
 
     protected void btCancelarActionPerformed(ActionEvent evt) {

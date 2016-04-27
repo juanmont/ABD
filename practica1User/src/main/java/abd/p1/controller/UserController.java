@@ -40,9 +40,4 @@ public class UserController {
 	public void updateUser(String email, Usuario c){
 		dao.updateUser(email, c);
 	}
-
-	public void updateAficionesUser(String email, List<String> lista) {
-		dao.updateAficionesUser(email,lista);
-		
-	}
 }

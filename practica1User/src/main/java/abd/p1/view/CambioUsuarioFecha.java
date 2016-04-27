@@ -6,6 +6,7 @@
 package abd.p1.view;
 
 import java.awt.event.ActionEvent;
+import java.util.Date;
 
 /**
  *
@@ -15,11 +16,11 @@ import java.awt.event.ActionEvent;
 public class CambioUsuarioFecha extends javax.swing.JDialog {
 	private boolean aceptar;
 	
-	public static String createCambioFecha(java.awt.Frame parent, boolean modal){
+	public static Date createCambioFecha(java.awt.Frame parent, boolean modal){
 		CambioUsuarioFecha cu = new CambioUsuarioFecha(parent, modal);
 		cu.setVisible(true);
 		if(cu.aceptar){
-			return cu.dateChooserCombo1.getText();
+			return cu.dateChooserCombo1.getSelectedDate().getTime();
 		}else{
 			return null;
 		}
@@ -30,6 +31,7 @@ public class CambioUsuarioFecha extends javax.swing.JDialog {
     public CambioUsuarioFecha(java.awt.Frame parent, boolean modal) {
     	super(parent, modal);
         initComponents();
+        this.setSize(350, 120);
     }
 
     /**
@@ -96,6 +98,7 @@ public class CambioUsuarioFecha extends javax.swing.JDialog {
                     .addComponent(btAceptar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+        this.pack();
     }// </editor-fold>//GEN-END:initComponents
 
     protected void btCancelarActionPerformed(ActionEvent evt) {

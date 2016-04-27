@@ -6,7 +6,10 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import abd.p1.controller.ListUserController;
+import abd.p1.controller.UserController;
 import abd.p1.view.VentanaLogin;
+import abd.p1.view.VentanaPrincipal;
 
 /**
  * Ésta es la clase que arranca la aplicación. La ejecución del método main()
@@ -39,8 +42,12 @@ public class Main {
             
             // Mostrar ventana de login y comprobar validez del usuario y contraseña.
             // Si son validos, mostrar ventana principal.
-            login = new VentanaLogin(null, true, sf);
+            UserController cU = new UserController(sf);
+            login = new VentanaLogin(null, true, sf, cU);
             login.setVisible(true);
+            if(login.isLogin()){
+            	new VentanaPrincipal(null, true,login.getUser(), cU, new ListUserController(sf)).setVisible(true);;
+            }
 
         } catch (HibernateException e) {
             e.printStackTrace();
