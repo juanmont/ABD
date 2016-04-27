@@ -8,6 +8,7 @@ package abd.p1.view;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -369,6 +370,8 @@ public class UserPanel extends javax.swing.JPanel {
                     .addComponent(buttonPassword))
                 .addContainerGap())
         );
+        if(u.getImagen() != null)
+        	 avatarPanel1.setIcon(new ImageIcon(u.getImagen()));
     }// </editor-fold>//GEN-END:initComponents
 
     protected void buttonNombreActionPerformed(ActionEvent evt) {
@@ -377,11 +380,17 @@ public class UserPanel extends javax.swing.JPanel {
 	}
 
 	protected void buttonFechaNacimientoActionPerformed(ActionEvent evt) {
-		
+		uCambio.setFecha_nacimiento(new Date(CambioUsuarioFecha.createCambioFecha(null, true)));
+		labelEdad.setText(new Integer(uCambio.getEdad()).toString() + " años");
 	}
 
 	protected void buttonAvatarActionPerformed(ActionEvent evt) {
-		// TODO Auto-generated method stub
+		CambioAvatar cA = new CambioAvatar(null, true);
+		byte[] avatar = cA.getAvatar();
+		if(avatar != null){
+			avatarPanel1.setIcon(new ImageIcon(avatar));
+			uCambio.setImagen(avatar);
+		}
 		
 	}
 
@@ -427,12 +436,12 @@ public class UserPanel extends javax.swing.JPanel {
     }
 
     private void buttonGuardarActionPerformed(java.awt.event.ActionEvent evt) {
-    	if(cambioAficiones){
+    	/*if(cambioAficiones){
     		List<String> lista = new ArrayList<String>();
     		for(int i = 0; i < listaAficiones.getModel().getSize(); i++)
     			lista.add(listaAficiones.getModel().getElementAt(i));
     		control.updateAficionesUser(u.getEmail(), lista);
-    	}
+    	}*/
         control.updateUser(u.getEmail(), uCambio);
     }
 

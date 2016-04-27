@@ -5,12 +5,33 @@
  */
 package abd.p1.view;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+
 /**
  *
  * @author adrianpanaderogonzalez
  */
 public class CambioAvatar extends java.awt.Dialog {
 
+	public byte[] getAvatar(){
+		try {  
+		    int returnVal = jFileChooser1.showOpenDialog(null);
+		    if (returnVal == jFileChooser1.APPROVE_OPTION) {
+		        FileInputStream input = new FileInputStream(jFileChooser1.getSelectedFile());
+		        byte[] data = new byte[input.available()];
+		        input.read(data);
+		        input.close();
+		        return data;
+		     }
+		     return null;
+		  }
+
+		  catch (IOException e) {
+		    System.out.println("Unable to read bytes: " + e.getMessage());
+		    return null;
+		  }
+    }
     /**
      * Creates new form CambioAvatar
      */
@@ -29,6 +50,7 @@ public class CambioAvatar extends java.awt.Dialog {
 
         jFileChooser1 = new javax.swing.JFileChooser();
 
+        
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);

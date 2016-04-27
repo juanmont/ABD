@@ -177,6 +177,7 @@ public class Usuario {
 	}
 	
 	public int calcularEdad(Date fecha) {
+		if(fecha != null){
 		Calendar birth = new GregorianCalendar();
 		Calendar today = new GregorianCalendar();
 		int age=0;
@@ -198,7 +199,8 @@ public class Usuario {
 			if(age < 0)
 				return 0;
 			return age;
-
+		}
+		return 0;
 		}
 
 	public void setAmigos(List<Usuario> selectAmigosByEmail) {

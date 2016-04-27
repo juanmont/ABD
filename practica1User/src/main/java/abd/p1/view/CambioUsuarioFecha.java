@@ -62,7 +62,7 @@ public class CambioUsuarioFecha extends javax.swing.JDialog {
 
         jLabel1.setText("Fecha de nacimiento:");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(super.getContentPane());
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
