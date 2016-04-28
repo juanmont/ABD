@@ -221,9 +221,7 @@ public class VentanaPrincipal extends javax.swing.JDialog {
 
     private void jButtonModificarPerfilActionPerformed(ActionEvent evt) {
     	userPanel = new AvatarPanel2(null, true, u, true, controlUsuarios);
-    	this.setVisible(false);
     	userPanel.setVisible(true);
-		this.setVisible(true);
 	}
     
     private void jButtonVerPerfilActionPerformed(java.awt.event.ActionEvent evt) {
@@ -233,7 +231,6 @@ public class VentanaPrincipal extends javax.swing.JDialog {
     	u2.setAficiones(controlUsuarios.selectAficionesByUsuario(u2.getEmail()));//GEN-FIRST:event_jButtonVerPerfilActionPerformed
     	userPanel = new AvatarPanel2(null, true, u2, false, controlUsuarios);
 		userPanel.setVisible(true);
-		this.setVisible(false);
     	}
     	else{
     		JOptionPane.showMessageDialog(null, "Debes seleccionar un usuario de la lista", "Error", JOptionPane.ERROR);

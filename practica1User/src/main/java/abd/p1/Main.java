@@ -52,7 +52,7 @@ public class Main {
         } catch (HibernateException e) {
             e.printStackTrace();
         } finally {
-            //if (sf != null) sf.close();
+            if (sf != null) sf.close();
         }
     }
 
