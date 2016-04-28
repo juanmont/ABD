@@ -162,8 +162,11 @@ public class VentanaLogin extends java.awt.Dialog {
 	         if (email != "" && pass != "") {
 		    	Usuario u2 = new Usuario(email, pass, "", null, null, 0.00, 0.00, null, null, null, null);
 				controlUsuarios.insertUser(u2);
+				this.setVisible(false);
 				new AvatarPanel2(null, true, u2, true, controlUsuarios).setVisible(true);
 	         }
+	         else
+	        	 JOptionPane.showMessageDialog(null, "Email o contraseña incorrectos" , "Error", JOptionPane.ERROR_MESSAGE); 
          }
          else
         	 JOptionPane.showMessageDialog(null, "Debes introducir un mail" , "Error", JOptionPane.ERROR_MESSAGE);

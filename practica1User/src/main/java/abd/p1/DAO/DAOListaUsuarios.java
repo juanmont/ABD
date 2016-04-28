@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import abd.p1.model.Contacto;
+import abd.p1.model.Genero;
 import abd.p1.model.Usuario;
 
 public class DAOListaUsuarios {
@@ -16,20 +17,22 @@ public class DAOListaUsuarios {
 		this.sf = sf;
 	}
 
-	public List<Usuario> getAllUsers() {
+	public List<Usuario> getAllUsers(String email) {
 		Session sesion = this.sf.openSession();
-		Query query = sesion.createQuery("From Usuario");
+		Query query = sesion.createQuery("From Usuario As u WHERE u.email != :email");
+		query.setString("email", email);
 		List<Usuario> l = query.list();
 		sesion.close();
 		return l;
 	}
 
-	public List<Usuario> getAllUsersWithName(String name, Contacto contacto) {
+	public List<Usuario> getAllUsersWithName(String name, Contacto contacto, Genero genero) {
 		Session sesion = this.sf.openSession();
-		Query query = sesion.createQuery("From Usuario As u WHERE u.nombre = :name AND (u.genero = :contacto OR :contacto2 = 2)");
+		Query query = sesion.createQuery("From Usuario As u WHERE u.nombre = :name AND (u.genero = :contacto OR :contacto2 = 2) AND u.contacto3 = :genero");
 		query.setString("name", name);
 		query.setInteger("contacto", contacto.ordinal());
 		query.setInteger("contacto2", contacto.ordinal());
+		query.setInteger("contacto3", genero.ordinal());
 		List<Usuario> l = query.list();
 		sesion.close();
 		return l;

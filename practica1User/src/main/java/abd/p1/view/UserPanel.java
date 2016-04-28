@@ -522,4 +522,5 @@ public class UserPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane scrollAficiones;
     private javax.swing.JScrollPane scrollDescripcion;
     // End of variables declaration//GEN-END:variables
+
 }

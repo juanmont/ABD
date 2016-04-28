@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 
 import abd.p1.DAO.DAOListaUsuarios;
 import abd.p1.model.Contacto;
+import abd.p1.model.Genero;
 import abd.p1.model.Usuario;
 
 public class ListUserController {
@@ -18,12 +19,12 @@ public class ListUserController {
 
 	}
 	
-	public List<Usuario> getAllUsers(){
-		return dao.getAllUsers();
+	public List<Usuario> getAllUsers(String email){
+		return dao.getAllUsers(email);
 	}
 	
-	public List<Usuario> getAllUsersWithName(String name, Contacto contacto){
-		return dao.getAllUsersWithName(name, contacto);
+	public List<Usuario> getAllUsersWithName(String name, Contacto contacto, Genero genero){
+		return dao.getAllUsersWithName(name, contacto, genero);
 	}
 	
 

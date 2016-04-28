@@ -50,7 +50,7 @@ public class VentanaPrincipal extends javax.swing.JDialog {
         this.controlUsuarios = controlUsuarios;
         this.controlListaUsuarios = controlListaUsuarios;
         modelo = new DefaultListModel<>();
-        List<Usuario> l = this.controlListaUsuarios.getAllUsers();
+        List<Usuario> l = this.controlListaUsuarios.getAllUsers(u.getEmail());
         for(Usuario usuario: l){
         	modelo.addElement(usuario);
         }
@@ -87,7 +87,7 @@ public class VentanaPrincipal extends javax.swing.JDialog {
 					String name = jTextFieldNombre.getText();
 			    	List<Usuario> lista = new ArrayList<Usuario>();
 			    	if(name != ""){
-			    		lista = controlListaUsuarios.getAllUsersWithName(name, u.getContacto());
+			    		lista = controlListaUsuarios.getAllUsersWithName(name, u.getContacto(), u.getGenero());
 			    		modelo.removeAllElements();
 			    		 for(Usuario usuario: lista){
 			    	        	modelo.addElement(usuario);
@@ -220,7 +220,10 @@ public class VentanaPrincipal extends javax.swing.JDialog {
     }//GEN-LAST:event_jCheckBoxAmigosActionPerformed
 
     private void jButtonModificarPerfilActionPerformed(ActionEvent evt) {
-    	userPanel = new AvatarPanel2(null, true, u, true, controlUsuarios);
+    	Usuario u2 = controlUsuarios.selectUsuarioByEmail(u.getEmail());
+    	if(u2 != null)
+    		u2.setAficiones(controlUsuarios.selectAficionesByUsuario(u2.getEmail()));
+    	userPanel = new AvatarPanel2(null, true, u2, true, controlUsuarios);
     	userPanel.setVisible(true);
 	}
     
