@@ -5,8 +5,6 @@
  */
 package abd.p1.view;
 
-import java.util.List;
-
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
@@ -31,9 +29,9 @@ public class AvatarPanel2 extends javax.swing.JDialog {
 	/**
      * Creates new form AvatarPanel2
      */
-    public AvatarPanel2(java.awt.Frame parent, boolean modal,Usuario u, boolean miPerfil, UserController c) {
+    public AvatarPanel2(java.awt.Frame parent, boolean modal,Usuario u, boolean miPerfil, UserController c, Usuario uSesion) {
     	super(parent, modal);
-        initComponents(u,miPerfil, c);
+        initComponents(u,miPerfil, c, uSesion);
     }
 
     /**
@@ -43,9 +41,9 @@ public class AvatarPanel2 extends javax.swing.JDialog {
      */
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents(Usuario u, boolean miPerfil, UserController c) {
+    private void initComponents(Usuario u, boolean miPerfil, UserController c, Usuario uSesion) {
 
-        userPanel1 = new abd.p1.view.UserPanel(u, miPerfil, c);
+        userPanel1 = new abd.p1.view.UserPanel(u, miPerfil, c, uSesion);
         userPanel1.addAncestorListener(new AncestorListener() {
 			
 			@Override

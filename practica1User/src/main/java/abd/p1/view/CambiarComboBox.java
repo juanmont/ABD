@@ -13,6 +13,10 @@ import java.util.List;
  * @author adrianpanaderogonzalez
  */
 public class CambiarComboBox extends java.awt.Dialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean cambio;
 	
 	public static String createCambioComboBox(java.awt.Frame parent, boolean modal, String label, List<String> lista){

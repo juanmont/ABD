@@ -13,10 +13,9 @@ public class MensajeAmistad extends Mensaje{
 	public MensajeAmistad(){
 		super();
 	}
-	public MensajeAmistad(Integer id, boolean leido, Date timestamp) {
-		super(id, leido, timestamp);
-		
-		this.aceptado = false;
+	public MensajeAmistad(Usuario usu, Usuario amigo){
+		super(usu, amigo);
+		aceptado = true;
 	}
 
 	public boolean isAceptado() {

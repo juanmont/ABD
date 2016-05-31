@@ -3,7 +3,6 @@ package abd.p1.model;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -11,9 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 @Entity
 @Table(name = "Usuario")
@@ -159,6 +155,18 @@ public class Usuario {
 	public void setAficiones(List<String> aficiones) {
 		this.aficiones = aficiones;
 	}
+	
+	public Set<Usuario> getAmigos() {
+		return amigos;
+	}
+	
+	public void addAmigo(Usuario amigo){
+		amigos.add(amigo);
+	}
+	
+	public void removeAmigo(Usuario amigo){
+		amigos.remove(amigo);
+	}
 
 	public String getDescripcion() {
 		return descripcion;
@@ -203,7 +211,7 @@ public class Usuario {
 		return 0;
 		}
 
-	public void setAmigos(List<Usuario> selectAmigosByEmail) {
+	public void setAmigos(Set<Usuario> selectAmigosByEmail) {
 		// TODO Auto-generated method stub
 			for(Usuario u: selectAmigosByEmail)
 				this.amigos.add(u);

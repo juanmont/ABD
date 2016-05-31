@@ -12,11 +12,11 @@ public class MensajeTexto extends Mensaje{
 	
 	public MensajeTexto(){
 		super();
+		texto = null;
 	}
 	
-	public MensajeTexto(Integer id, boolean leido, Date timestamp) {
-		super(id, leido, timestamp);
-		this.texto = null;
+	public MensajeTexto(String texto) {
+		this.texto = texto;
 	}
 
 	public String getTexto() {

@@ -9,7 +9,7 @@ import javax.persistence.*;
 public abstract class Mensaje {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Integer id;
 	@Column
 	protected boolean leido;
@@ -23,10 +23,11 @@ public abstract class Mensaje {
 	public Mensaje(){
 	}
 	
-	public Mensaje(Integer id, boolean leido, Date timestamp) {
-		this.id = id;
-		this.leido = leido;
-		this.timestamp = timestamp;
+	public Mensaje(Usuario usu, Usuario amigo){
+		usuarioEnvia = usu;
+		usuarioRecibe = amigo;
+		leido = false;
+		timestamp = new Date();
 	}
 
 	public Integer getId() {

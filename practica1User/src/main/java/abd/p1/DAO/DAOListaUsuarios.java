@@ -19,8 +19,9 @@ public class DAOListaUsuarios {
 
 	public List<Usuario> getAllUsers(String email) {
 		Session sesion = this.sf.openSession();
-		Query query = sesion.createQuery("From Usuario As u WHERE u.email != :email");
+		Query query = sesion.createQuery("From Usuario As u WHERE u.email != :email ORDER BY (u.latitud + u.longitud)");
 		query.setString("email", email);
+		@SuppressWarnings("unchecked")
 		List<Usuario> l = query.list();
 		sesion.close();
 		return l;
@@ -28,11 +29,12 @@ public class DAOListaUsuarios {
 
 	public List<Usuario> getAllUsersWithName(String name, Contacto contacto, Genero genero) {
 		Session sesion = this.sf.openSession();
-		Query query = sesion.createQuery("From Usuario As u WHERE u.nombre = :name AND (u.genero = :contacto OR :contacto2 = 2) AND u.contacto3 = :genero");
+		Query query = sesion.createQuery("From Usuario As u WHERE u.nombre = :name AND (u.genero = :contacto OR :contacto2 = 2) AND (u.contacto = :genero OR u.contacto = 2) ORDER BY (u.latitud + u.longitud)");
 		query.setString("name", name);
 		query.setInteger("contacto", contacto.ordinal());
 		query.setInteger("contacto2", contacto.ordinal());
-		query.setInteger("contacto3", genero.ordinal());
+		query.setInteger("genero", genero.ordinal());
+		@SuppressWarnings("unchecked")
 		List<Usuario> l = query.list();
 		sesion.close();
 		return l;

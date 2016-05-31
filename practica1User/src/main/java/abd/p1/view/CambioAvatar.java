@@ -14,6 +14,13 @@ import java.io.IOException;
  */
 public class CambioAvatar extends java.awt.Dialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+	@SuppressWarnings("static-access")
 	public byte[] getAvatar(){
 		try {  
 		    int returnVal = jFileChooser1.showOpenDialog(null);

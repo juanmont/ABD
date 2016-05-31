@@ -5,13 +5,14 @@
  */
 package abd.p1.view;
 
-import abd.p1.controller.ListUserController;
 import abd.p1.controller.LoginController;
 import abd.p1.controller.UserController;
+import abd.p1.model.CalculadorDistancias;
 import abd.p1.model.Usuario;
 import abd.p1.model.ValidadorEmail;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JOptionPane;
 
@@ -27,7 +28,6 @@ public class VentanaLogin extends java.awt.Dialog {
     private LoginController control;
     private UserController controlUsuarios;
     private SessionFactory sesion;
-    private VentanaPrincipal ventanaPrincipal;
     private boolean login;
     private Usuario usuario;
     /**
@@ -143,7 +143,7 @@ public class VentanaLogin extends java.awt.Dialog {
 	        	if(control.login(email, pass)) {
 	        		usuario = controlUsuarios.selectUsuarioByEmail(email);
 	        		usuario.setAficiones(controlUsuarios.selectAficionesByUsuario(email));
-	        		List<Usuario> l = controlUsuarios.selectAmigosByEmail(email);
+	        		Set<Usuario> l = (Set<Usuario>) controlUsuarios.selectAmigosByEmail(email);
 	        		usuario.setAmigos(l);
 	        		login = true;
 	        		this.dispose();
@@ -160,10 +160,15 @@ public class VentanaLogin extends java.awt.Dialog {
          String pass = new String(password);
          if(ValidadorEmail.validarEmail(email)){
 	         if (email != "" && pass != "") {
-		    	Usuario u2 = new Usuario(email, pass, "", null, null, 0.00, 0.00, null, null, null, null);
+	        	 double latitud = (Math.random()*(41.2- 40)+40);
+	        	 double longitud = (Math.random()*(4.5- 3)+3);
+	        	 double latitud2 = (Math.random()*(41.2- 40)+40);
+	        	 double longitud2 = (Math.random()*(4.5- 3)+3);
+	        	 System.out.println("latitud:"+latitud);
+	        	 System.out.println("longitud:" + longitud);
+	        	 Usuario u2 = new Usuario(email, pass, "", null, null, latitud, longitud, null, null, null, null);
 				controlUsuarios.insertUser(u2);
-				this.setVisible(false);
-				new AvatarPanel2(null, true, u2, true, controlUsuarios).setVisible(true);
+				new AvatarPanel2(null, true, u2, true, controlUsuarios, null).setVisible(true);
 	         }
 	         else
 	        	 JOptionPane.showMessageDialog(null, "Email o contraseña incorrectos" , "Error", JOptionPane.ERROR_MESSAGE); 

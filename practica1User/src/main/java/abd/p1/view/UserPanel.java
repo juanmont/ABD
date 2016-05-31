@@ -7,8 +7,6 @@ package abd.p1.view;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.InputMethodEvent;
-import java.awt.event.InputMethodListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +20,7 @@ import javax.swing.event.DocumentListener;
 import abd.p1.controller.UserController;
 import abd.p1.model.Contacto;
 import abd.p1.model.Genero;
+import abd.p1.model.MensajeAmistad;
 import abd.p1.model.Usuario;
 
 /**
@@ -39,8 +38,8 @@ public class UserPanel extends javax.swing.JPanel {
     private boolean editable = true;
     private Usuario uCambio;
     private Usuario u;
+    private Usuario uSesion;
     private UserController control;
-    private CambioUsuario cambioUsuario;
     private DefaultListModel<String> modelo;
     private boolean cambioAficiones;
     private boolean cambioDescripciones;
@@ -48,10 +47,11 @@ public class UserPanel extends javax.swing.JPanel {
 	/**
      * Creates new form UserPanel
      */
-    public UserPanel(Usuario u, boolean miPerfil, UserController c) {
+    public UserPanel(Usuario u, boolean miPerfil, UserController c, Usuario uSesion) {
     	cambioAficiones = false;
     	cambioDescripciones = false;
     	this.u = u;
+    	this.uSesion = uSesion;
     	this.control = c;
     	uCambio = new Usuario();
         initComponents(u, u.getAficiones());
@@ -495,6 +495,12 @@ public class UserPanel extends javax.swing.JPanel {
 	private void buttonPasswordActionPerformed(java.awt.event.ActionEvent evt) {
         uCambio.setPassword(CambioPassword.createCambioPassword(null, true, u.getPassword()));
     }
+	
+	private void addFriend(){
+		u.addAmigo(uSesion);
+		uSesion.addAmigo(u);
+		control.nuevoMensajeAmistad(new MensajeAmistad(uSesion, u));
+	}
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
     private abd.p1.view.AvatarPanel avatarPanel1;

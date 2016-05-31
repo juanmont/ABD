@@ -5,7 +5,6 @@
  */
 package abd.p1.view;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 
 /**

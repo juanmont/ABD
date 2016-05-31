@@ -5,16 +5,17 @@
  */
 package abd.p1.view;
 
-import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
-
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author adrianpanaderogonzalez
  */
 public class CambioPassword extends java.awt.Dialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean aceptar;
 	private String pass;
 	

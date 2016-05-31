@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import abd.p1.model.Mensaje;
 import abd.p1.model.Usuario;
 
 public class DAOUsuarios {
@@ -27,15 +28,27 @@ public class DAOUsuarios {
 		Session sesion = this.sf.openSession();
 		Query query = sesion.createQuery("select elements(u.aficiones) from Usuario u Where u.email = :email");
 		query.setString("email", email);
+		@SuppressWarnings("unchecked")
 		List<String> l = query.list();
 		sesion.close();
 		return l;
 	}
 	
-	public List<Usuario> selectAmigosByEmail(String email) {
+	public List<String> selectAmigosByUsuario(String email) {
 		Session sesion = this.sf.openSession();
 		Query query = sesion.createQuery("select elements(u.amigos) from Usuario u Where u.email = :email");
 		query.setString("email", email);
+		@SuppressWarnings("unchecked")
+		List<String> l = query.list();
+		sesion.close();
+		return l;
+	}
+	
+	public List<Usuario> selectFriendsPerUser(String email) {
+		Session sesion = this.sf.openSession();
+		Query query = sesion.createQuery("select elements(u.amigos) from Usuario u Where u.email = :email");
+		query.setString("email", email);
+		@SuppressWarnings("unchecked")
 		List<Usuario> l = query.list();
 		sesion.close();
 		return l;
@@ -56,6 +69,14 @@ public class DAOUsuarios {
 		 sesion.delete(u);
 		 tr.commit();
 		 sesion.close();
+	}
+	
+	public void nuevoMensajeAmistad(Mensaje m){
+		Session sesion = this.sf.openSession();
+		Transaction tr = sesion.beginTransaction();
+		sesion.save(m);
+		tr.commit();
+		sesion.close();
 	}
 	
 	public void updateUser(String email, Usuario cambio){
@@ -93,6 +114,9 @@ public class DAOUsuarios {
 		
 		if(cambio.getAficiones() != null)
 			u.setAficiones(cambio.getAficiones());
+		
+		if(cambio.getAmigos() != null)
+			u.setAmigos((cambio.getAmigos()));
 		////////////////////////////////////////////////////////////
 		
 		tr.commit();

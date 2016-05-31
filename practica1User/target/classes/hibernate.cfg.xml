@@ -21,6 +21,7 @@
 	<mapping class = "abd.p1.model.Pregunta"/>
 	<mapping class = "abd.p1.model.Opcion"/>
 	<mapping class = "abd.p1.model.Mensaje"/>
+	<mapping class = "abd.p1.model.Contesta"/>
 	<mapping class = "abd.p1.model.MensajeAmistad"/>
 	<mapping class = "abd.p1.model.MensajeInvitacion"/>
 	<mapping class = "abd.p1.model.MensajeTexto"/>

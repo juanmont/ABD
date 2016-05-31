@@ -9,20 +9,13 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.ListModel;
-
-import org.hibernate.SessionFactory;
-
 import abd.p1.controller.ListUserController;
 import abd.p1.controller.UserController;
-import abd.p1.model.Contacto;
-import abd.p1.model.Genero;
+import abd.p1.model.CalculadorDistancias;
 import abd.p1.model.Usuario;
 
 /**
@@ -52,6 +45,7 @@ public class VentanaPrincipal extends javax.swing.JDialog {
         modelo = new DefaultListModel<>();
         List<Usuario> l = this.controlListaUsuarios.getAllUsers(u.getEmail());
         for(Usuario usuario: l){
+        	//System.out.println(CalculadorDistancias.calculaDistanca(u.getLatitud(), u.getLongitud(), usuario.getLatitud(), usuario.getLongitud()));
         	modelo.addElement(usuario);
         }
         listaUsuarios.setModel(modelo);
@@ -223,7 +217,7 @@ public class VentanaPrincipal extends javax.swing.JDialog {
     	Usuario u2 = controlUsuarios.selectUsuarioByEmail(u.getEmail());
     	if(u2 != null)
     		u2.setAficiones(controlUsuarios.selectAficionesByUsuario(u2.getEmail()));
-    	userPanel = new AvatarPanel2(null, true, u2, true, controlUsuarios);
+    	userPanel = new AvatarPanel2(null, true, u2, true, controlUsuarios, null);
     	userPanel.setVisible(true);
 	}
     
@@ -231,12 +225,12 @@ public class VentanaPrincipal extends javax.swing.JDialog {
   
     	Usuario u2 = listaUsuarios.getSelectedValue();
     	if(u2 != null){
-    	u2.setAficiones(controlUsuarios.selectAficionesByUsuario(u2.getEmail()));//GEN-FIRST:event_jButtonVerPerfilActionPerformed
-    	userPanel = new AvatarPanel2(null, true, u2, false, controlUsuarios);
-		userPanel.setVisible(true);
+	    	u2.setAficiones(controlUsuarios.selectAficionesByUsuario(u2.getEmail()));//GEN-FIRST:event_jButtonVerPerfilActionPerformed
+	    	userPanel = new AvatarPanel2(null, true, u2, false, controlUsuarios, u);
+			userPanel.setVisible(true);
     	}
     	else{
-    		JOptionPane.showMessageDialog(null, "Debes seleccionar un usuario de la lista", "Error", JOptionPane.ERROR);
+    		JOptionPane.showMessageDialog(null, "Debes seleccionar un usuario de la lista", "Error", JOptionPane.ERROR_MESSAGE);
     	}
     }//GEN-LAST:event_jButtonVerPerfilActionPerformed
 

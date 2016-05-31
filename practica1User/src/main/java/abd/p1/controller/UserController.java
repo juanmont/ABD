@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 
 import abd.p1.DAO.DAOUsuarios;
+import abd.p1.model.MensajeAmistad;
 import abd.p1.model.Usuario;
 
 
@@ -26,7 +27,7 @@ public class UserController {
 	}
 	
 	public List<Usuario> selectAmigosByEmail(String email) {
-		return dao.selectAmigosByEmail(email);
+		return dao.selectFriendsPerUser(email);
 	}
 	
 	public void insertUser(Usuario u){
@@ -40,4 +41,10 @@ public class UserController {
 	public void updateUser(String email, Usuario c){
 		dao.updateUser(email, c);
 	}
+
+	public void nuevoMensajeAmistad(MensajeAmistad mensajeAmistad) {
+		dao.nuevoMensajeAmistad(mensajeAmistad);
+		
+	}
+
 }
