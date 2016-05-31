@@ -70,7 +70,7 @@ public class UserPanel extends javax.swing.JPanel {
 		buttonAnadirAficion.setVisible(false);
 		buttonEditarAficion.setVisible(false);
         buttonEliminarAficion.setVisible(false);
-		buttonCancelar.setText("Enviar petición de amistad");
+		buttonCancelar.setVisible(false);
 		buttonAvatar.setVisible(false);
 		buttonFechaNacimiento.setVisible(false);
 		buttonGuardar.setVisible(false);

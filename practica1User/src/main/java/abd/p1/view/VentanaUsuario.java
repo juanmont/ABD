@@ -13,13 +13,14 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
 import abd.p1.controller.UserController;
+import abd.p1.model.CalculadorDistancias;
 import abd.p1.model.Usuario;
 
 import javax.swing.JButton;
 
 public class VentanaUsuario extends javax.swing.JDialog{
 
-	private int distancia = 200;
+	private JLabel labelDistancia;
 	
 	/**
 	 * 
@@ -43,7 +44,8 @@ public class VentanaUsuario extends javax.swing.JDialog{
 		JPanel jPanelChat = new JPanel();
 		jTabbedPaneUsuario.addTab("Chat", null, jPanelChat, null);
 		
-		JLabel labelDistancia = new JLabel("Distancia: " +distancia+ "m");
+		int d = (int) CalculadorDistancias.calculaDistanca(uSesion.getLatitud(), uSesion.getLongitud(), u.getLatitud(), u.getLongitud()); 
+		labelDistancia = new JLabel("Distancia: " +d+ "m");
 		labelDistancia.setHorizontalAlignment(SwingConstants.LEFT);
 		getContentPane().add(labelDistancia, BorderLayout.CENTER);
 		
