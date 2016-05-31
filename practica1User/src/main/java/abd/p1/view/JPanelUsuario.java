@@ -2,6 +2,7 @@ package abd.p1.view;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +27,7 @@ public class JPanelUsuario extends JPanel{
 	private UserController controlUsuarios;
 	private AvatarPanel2 userPanel;
 	private boolean pregunta;
+	private VentanaUsuario vUsuario;
 	
 	public JPanelUsuario(UserController controlUsuarios, ListUserController controlListaUsuarios, Usuario u, boolean pregunta){
     	initComponents(controlListaUsuarios);
@@ -170,8 +172,9 @@ public class JPanelUsuario extends JPanel{
 		    	Usuario u2 = listaUsuarios.getSelectedValue();
 		    	if(u2 != null){
 			    	u2.setAficiones(controlUsuarios.selectAficionesByUsuario(u2.getEmail()));//GEN-FIRST:event_jButtonVerPerfilActionPerformed
-			    	userPanel = new AvatarPanel2(null, true, u2, false, controlUsuarios, u);
-					userPanel.setVisible(true);
+			    	vUsuario = new VentanaUsuario(null, true, u2, false, controlUsuarios, u);
+			    	vUsuario.setSize(new Dimension(600,600));
+			    	vUsuario.setVisible(true);
 		    	}
 		    	else{
 		    		JOptionPane.showMessageDialog(null, "Debes seleccionar un usuario de la lista", "Error", JOptionPane.ERROR_MESSAGE);

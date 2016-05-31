@@ -12,8 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 import abd.p1.controller.ListUserController;
 import abd.p1.controller.UserController;
@@ -80,16 +85,34 @@ public class VentanaPrincipal extends javax.swing.JDialog {
 
         jTabbedPane1.addTab("Preguntas", jPanelPreguntas);
 
+        
+        JButton btnMarcarTodosComo = new JButton("Marcar todos como leídos");
+        
+        textArea = new JTextArea();
+
         javax.swing.GroupLayout jPanelMensajesLayout = new javax.swing.GroupLayout(jPanelMensajes);
-        jPanelMensajes.setLayout(jPanelMensajesLayout);
         jPanelMensajesLayout.setHorizontalGroup(
-            jPanelMensajesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 447, Short.MAX_VALUE)
+        	jPanelMensajesLayout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanelMensajesLayout.createSequentialGroup()
+        			.addGroup(jPanelMensajesLayout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(jPanelMensajesLayout.createSequentialGroup()
+        					.addGap(115)
+        					.addComponent(btnMarcarTodosComo))
+        				.addGroup(jPanelMensajesLayout.createSequentialGroup()
+        					.addContainerGap()
+        					.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)))
+        			.addContainerGap())
         );
         jPanelMensajesLayout.setVerticalGroup(
-            jPanelMensajesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 327, Short.MAX_VALUE)
+        	jPanelMensajesLayout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanelMensajesLayout.createSequentialGroup()
+        			.addContainerGap()
+        			.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 267, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.UNRELATED)
+        			.addComponent(btnMarcarTodosComo)
+        			.addContainerGap(13, Short.MAX_VALUE))
         );
+        jPanelMensajes.setLayout(jPanelMensajesLayout);
 
         jTabbedPane1.addTab("Mensajes no leídos", jPanelMensajes);
 
@@ -115,4 +138,5 @@ public class VentanaPrincipal extends javax.swing.JDialog {
     private javax.swing.JPanel jPanelPreguntas;
     private JPanelUsuario jPanelUsuarios;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private JTextArea textArea;
 }
