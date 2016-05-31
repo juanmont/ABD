@@ -12,8 +12,11 @@ import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
+import abd.p1.controller.ListUserController;
+import abd.p1.controller.UserController;
 import abd.p1.model.Opcion;
 import abd.p1.model.Pregunta;
+import abd.p1.model.Usuario;
 
 /**
  *
@@ -25,7 +28,9 @@ public class ResponderPregunta extends java.awt.Dialog {
 	private javax.swing.JList<Opcion> listaOpciones;
 	private static Pregunta p;
 	private Opcion o;
-	private VentanaPrincipal vp;
+	private ListUserController controlListaUsuarios;
+	private Usuario u;
+	private UserController controlUsuarios;
 	
     /**
 	 * 
@@ -34,13 +39,20 @@ public class ResponderPregunta extends java.awt.Dialog {
 	/**
      * Creates new form ResponderPregunta
 	 * @param p 
+	 * @param u 
+	 * @param controlUsuarios 
+	 * @param controlListaUsuarios 
      */
-    public ResponderPregunta(java.awt.Frame parent, boolean modal, Pregunta p, VentanaPrincipal vp) {
+    public ResponderPregunta(java.awt.Frame parent, boolean modal, Pregunta p, Usuario u, UserController controlUsuarios, ListUserController controlListaUsuarios) {
         super(parent, modal);
         this.p = p;
-        this.vp = vp;
-        this.o = p.getOpcion(1);
+        this.u = u;
+        this.controlUsuarios = controlUsuarios;
+        this.controlListaUsuarios = controlListaUsuarios;
+        //if(p != null)
+        //this.o = p.getOpcion(1);
         initComponents();
+        this.setVisible(true);
     }
 
     /**
@@ -59,6 +71,7 @@ public class ResponderPregunta extends java.awt.Dialog {
         jSlider1 = new javax.swing.JSlider();
         buttonResponder = new javax.swing.JButton();
         buttonInvitarAmigo = new javax.swing.JButton();
+        listaOpciones = new javax.swing.JList<>();
         
         modelo = new DefaultListModel<>();
         //modelo.addElement(o);
@@ -171,9 +184,13 @@ public class ResponderPregunta extends java.awt.Dialog {
 	}
     
     private void buttonInvitarAmigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonInvitarAmigoActionPerformed
-    	vp.muestraUsuariosPregunta();
+    	new listaUsuarioPreguntas(null, true,controlUsuarios, controlListaUsuarios, true, u);
     }//GEN-LAST:event_buttonInvitarAmigoActionPerformed
 
+    
+    public static void main(String[] args){
+    	new ResponderPregunta(null, true, new Pregunta(), new Usuario(), new UserController(null), new ListUserController(null));
+    }
     /**
      * @param args the command line arguments
      */
