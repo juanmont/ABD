@@ -143,8 +143,9 @@ public class VentanaLogin extends java.awt.Dialog {
 	        	if(control.login(email, pass)) {
 	        		usuario = controlUsuarios.selectUsuarioByEmail(email);
 	        		usuario.setAficiones(controlUsuarios.selectAficionesByUsuario(email));
-	        		Set<Usuario> l = (Set<Usuario>) controlUsuarios.selectAmigosByEmail(email);
-	        		usuario.setAmigos(l);
+	        		List<Usuario> l = controlUsuarios.selectAmigosByEmail(email);
+	        		for(Usuario u: l)
+	        			usuario.addAmigo(u);
 	        		login = true;
 	        		this.dispose();
 	        		this.setVisible(false);

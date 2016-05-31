@@ -13,6 +13,8 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 import abd.p1.controller.ListUserController;
 import abd.p1.controller.UserController;
 import abd.p1.model.CalculadorDistancias;
@@ -233,6 +235,10 @@ public class VentanaPrincipal extends javax.swing.JDialog {
     		JOptionPane.showMessageDialog(null, "Debes seleccionar un usuario de la lista", "Error", JOptionPane.ERROR_MESSAGE);
     	}
     }//GEN-LAST:event_jButtonVerPerfilActionPerformed
+    
+    public void muestraUsuariosPregunta(){
+    	new ListaUsuariosPregunta(null, true, jPanelUsuarios);
+    }
 
     
 
